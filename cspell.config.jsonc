@@ -1,0 +1,27 @@
+// 숨김 파일과 로컬 스킬 원본을 포함해 철자를 검사합니다.
+//
+// 참고: https://cspell.org/docs/Configuration/properties
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+
+  // 기본으로 비활성화된 Git 제외 규칙 반영과 숨김 파일 검색을 활성화합니다.
+  "useGitignore": true,
+  "enableGlobDot": true,
+
+  // Git 메타데이터·pnpm 및 APM 잠금 파일·스킬 생성물을 검사 대상에서 제외합니다.
+  // 외부에서 가져온 find-skills 문서는 원본 문구를 보존합니다.
+  "ignorePaths": [
+    ".apm/skills/find-skills/SKILL.md",
+    ".git",
+    "pnpm-lock.yaml",
+    ".agents/skills/**",
+    ".claude/skills/**",
+    "apm.lock.yaml",
+  ],
+
+  // 확장자 없는 LICENSE에도 npm 사전을 적용해 Vercel 오탐을 피합니다.
+  "dictionaries": ["npm"],
+
+  // 개발 도구의 고유 이름 중 사전에 없는 단어만 허용합니다.
+  "words": ["tsgolint", "typescriptteam"],
+}

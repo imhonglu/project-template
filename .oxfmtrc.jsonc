@@ -1,0 +1,10 @@
+// 기본 포맷 규칙에 import 정렬을 추가합니다.
+//
+// 참고: https://oxc.rs/docs/guide/usage/formatter/config
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "sortImports": true,
+
+  // APM 잠금 파일과 스킬 생성물은 해당 도구로 재생성하므로 포맷 대상에서 제외합니다.
+  "ignorePatterns": [".agents/skills/**", ".claude/skills/**", "apm.lock.yaml"],
+}

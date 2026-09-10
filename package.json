@@ -1,0 +1,20 @@
+{
+  "name": "project-template",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "oxfmt --check && oxlint && cspell --no-progress . && pnpm run typecheck && pnpm test",
+    "fix": "oxlint --fix && oxfmt",
+    "test": "vitest run",
+    "typecheck": "tsc && pnpm --recursive --if-present run typecheck"
+  },
+  "devDependencies": {
+    "cspell": "10.3.0",
+    "oxfmt": "^0.67.0",
+    "oxlint": "^1.82.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
+  }
+}

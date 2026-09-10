@@ -1,0 +1,45 @@
+// 패키지에서 공유할 타입 검사 옵션을 정의합니다.
+// TypeScript 7의 strict 기본값은 true이므로 중복 선언하지 않습니다.
+//
+// 참고: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html#simple-default-changes
+{
+  "compilerOptions": {
+    // 속성 생략과 undefined를 구분하고 인덱스 조회의 누락 가능성을 검사합니다.
+    //
+    // 참고: https://www.typescriptlang.org/tsconfig/exactOptionalPropertyTypes.html
+    // 참고: https://www.typescriptlang.org/tsconfig/noUncheckedIndexedAccess.html
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+
+    // 반환 경로 누락과 의도하지 않은 switch 분기 통과를 검사합니다.
+    //
+    // 참고: https://www.typescriptlang.org/tsconfig/noImplicitReturns.html
+    // 참고: https://www.typescriptlang.org/tsconfig/noFallthroughCasesInSwitch.html
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // 타입 제거만으로 실행 가능한 문법을 사용하고 타입 전용 import를 명시합니다.
+    //
+    // 참고: https://www.typescriptlang.org/tsconfig/erasableSyntaxOnly.html
+    // 참고: https://www.typescriptlang.org/tsconfig/verbatimModuleSyntax.html
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+
+    // 타입 검사만 실행합니다. tsc로 빌드하는 패키지는 이 옵션을 재정의합니다.
+    //
+    // 참고: https://www.typescriptlang.org/tsconfig/noEmit.html
+    "noEmit": true,
+
+    // 빌드 없이 TypeScript 소스를 직접 참조하도록 .ts 확장자 import를 허용합니다.
+    // JavaScript로 빌드하는 패키지는 확장자 변환 방식을 별도로 구성합니다.
+    //
+    // 참고: https://www.typescriptlang.org/tsconfig/allowImportingTsExtensions.html
+    "allowImportingTsExtensions": true,
+
+    // 선언 파일 내부 검사를 생략해 검사 비용을 줄입니다.
+    // 선언 파일 검사가 필요한 패키지는 false로 재정의합니다.
+    //
+    // 참고: https://www.typescriptlang.org/tsconfig/skipLibCheck.html
+    "skipLibCheck": true
+  }
+}

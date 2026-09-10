@@ -1,0 +1,11 @@
+# Git에서 텍스트 파일의 줄바꿈을 LF로 통일하고 바이너리 파일은 자동으로 구분합니다.
+# 편집 시에는 .editorconfig를, Git 저장·체크아웃 시에는 이 설정을 적용합니다.
+#
+# 참고: https://git-scm.com/docs/gitattributes
+* text=auto eol=lf
+
+# 주석이 포함된 공통 TypeScript 설정을 GitHub에서 JSONC로 표시합니다.
+# tsconfig.json은 기본 인식 대상이므로 생략합니다.
+#
+# 참고: https://github.com/github-linguist/linguist/blob/main/docs/overrides.md
+/tsconfig.base.json linguist-language=jsonc

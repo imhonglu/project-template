@@ -1,0 +1,11 @@
+// 저장소의 편집·검사 설정에 필요한 확장을 추천합니다.
+//
+// 참고: https://code.visualstudio.com/docs/configure/extensions/extension-marketplace#_workspace-recommended-extensions
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "oxc.oxc-vscode",
+    "typescriptteam.native-preview",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

@@ -1,0 +1,30 @@
+# main 브랜치 푸시·풀 리퀘스트·수동 실행 시 공통 설치·검사 명령을 실행합니다.
+#
+# 참고: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# 저장소·조직의 기본 권한과 관계없이 소스 읽기 권한만 요청합니다.
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    # 개발 도구·의존성·스킬을 설치한 뒤 검사합니다.
+    steps:
+      - uses: actions/checkout@v7
+      - uses: jdx/mise-action@v4
+
+        # CI 플랫폼의 잠금 정보에 설치 URL이 없으면 설치를 실패시킵니다.
+        # 참고: https://mise.jdx.dev/dev-tools/mise-lock.html#strict-lockfile-mode
+        env:
+          MISE_LOCKED: "1"
+      - run: mise run setup
+      - run: pnpm check

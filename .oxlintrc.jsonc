@@ -1,0 +1,29 @@
+// 기본 오류 검사에 Vitest 규칙을 추가하고 경고도 검사 실패로 처리합니다.
+//
+// 참고: https://oxc.rs/docs/guide/usage/linter/config
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+
+  // plugins는 기본 플러그인 목록을 대체하므로 기본 플러그인도 함께 지정합니다.
+  //
+  // 참고: https://oxc.rs/docs/guide/usage/linter/plugins
+  "plugins": ["unicorn", "typescript", "oxc", "vitest"],
+  "options": {
+    "denyWarnings": true,
+
+    // no-deprecated는 타입 정보가 필요하므로 oxlint-tsgolint로 분석합니다.
+    //
+    // 참고: https://oxc.rs/docs/guide/usage/linter/type-aware.html
+    "typeAware": true,
+  },
+
+  // @deprecated로 표시된 API 사용을 오류로 처리합니다.
+  //
+  // 참고: https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-deprecated.html
+  "rules": {
+    "typescript/no-deprecated": "error",
+  },
+
+  // 스킬 지원 코드는 .apm/의 원본에서 검사하고 스킬 생성물은 제외합니다.
+  "ignorePatterns": [".agents/skills/**", ".claude/skills/**"],
+}

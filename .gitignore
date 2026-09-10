@@ -1,0 +1,43 @@
+# 재생성할 수 있는 설치·빌드 결과와 로컬 상태를 Git 추적 대상에서 제외합니다.
+# 개인별 추가 제외 규칙은 Git 전역 설정에서 관리합니다.
+#
+# 참고: https://git-scm.com/docs/gitignore
+
+# pnpm 설치 결과와 저장소 안에 생성되는 pnpm 저장 공간을 제외합니다.
+#
+# 참고: https://pnpm.io/settings/node-modules#modulesdir
+# 참고: https://pnpm.io/settings/store#storedir
+node_modules/
+.pnpm-store/
+
+# 패키지의 빌드·커버리지·증분 타입 검사 결과를 제외합니다.
+#
+# 참고: https://www.typescriptlang.org/tsconfig/incremental.html
+# 참고: https://vitest.dev/guide/coverage
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# 로컬 환경 파일은 제외하고 공유할 설정 예시는 추적합니다.
+#
+# 참고: https://nodejs.org/api/environment_variables.html
+.env
+.env.*
+!.env.example
+
+# macOS의 디렉터리 메타데이터를 제외합니다.
+#
+# 참고: https://git-scm.com/docs/gitignore
+.DS_Store
+
+# Claude Code의 사용자별 로컬 설정을 제외합니다.
+#
+# 참고: https://code.claude.com/docs/en/settings#settings-files
+.claude/settings.local.json
+
+# 다시 설치할 수 있는 APM 의존성 캐시를 제외합니다.
+# 저장소를 복제한 직후에도 스킬을 사용할 수 있도록 원본·설정·잠금 파일·생성물은 추적합니다.
+#
+# 참고: https://microsoft.github.io/apm/consumer/install-packages/#what-to-commit
+apm_modules/

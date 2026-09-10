@@ -1,0 +1,13 @@
+# 상위 디렉터리 설정을 상속하지 않고 UTF-8·LF·공백 2칸을 사용합니다.
+# 편집기마다 파일 끝 줄바꿈을 추가하고 줄 끝 공백을 제거하도록 통일합니다.
+#
+# 참고: https://editorconfig.org/
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true

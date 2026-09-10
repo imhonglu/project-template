@@ -1,0 +1,18 @@
+// 편집기에서도 저장소의 TypeScript SDK와 Oxc를 사용합니다.
+//
+// 참고: https://github.com/microsoft/typescript-go#using-with-visual-studio-code
+{
+  "js/ts.experimental.useTsgo": true,
+  "js/ts.tsdk.path": "./node_modules/typescript",
+
+  // 저장 시 린트 자동 수정·포맷을 실행합니다. 자동 저장에도 적용합니다.
+  // formatOnSave는 사용자 설정의 true를 덮어써 중복 실행을 막고, 수동 포맷에는 Oxc를 사용합니다.
+  //
+  // 참고: https://github.com/oxc-project/oxc-vscode#oxfmt
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always",
+    "source.format.oxc": "always"
+  }
+}

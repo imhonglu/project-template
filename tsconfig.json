@@ -1,0 +1,16 @@
+// 루트의 도구 설정 파일(*.config.ts)을 Node.js 환경에서 타입 검사합니다.
+//
+// 참고: https://www.typescriptlang.org/tsconfig/
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    // DOM 전역을 제외하고 Node.js 모듈 해석을 사용합니다.
+    // moduleResolution과 target은 nodenext의 기본값을 사용합니다. target은 esnext입니다.
+    //
+    // 참고: https://www.typescriptlang.org/tsconfig/module.html
+    // 참고: https://www.typescriptlang.org/tsconfig/lib.html
+    "lib": ["es2025"],
+    "module": "nodenext"
+  },
+  "include": ["*.config.ts"]
+}

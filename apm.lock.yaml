@@ -1,0 +1,80 @@
+lockfile_version: '1'
+dependencies: []
+deployments:
+- kind: project-relative
+  target: claude
+  value: .claude/skills/find-skills
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/find-skills/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca
+- kind: project-relative
+  target: claude
+  value: .claude/skills/find-skills/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:c1b90ed72522b58e1913a72df8bb84b9e78ec188776262f4ca71ab26f1b273e7
+- kind: project-relative
+  target: legacy
+  value: .agents/skills/find-skills
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: null
+- kind: project-relative
+  target: legacy
+  value: .agents/skills/find-skills/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca
+- kind: project-relative
+  target: legacy
+  value: .agents/skills/find-skills/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:c1b90ed72522b58e1913a72df8bb84b9e78ec188776262f4ca71ab26f1b273e7
+- kind: project-relative
+  target: legacy
+  value: .agents/skills/find-skills/skill_kr.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:c1b90ed72522b58e1913a72df8bb84b9e78ec188776262f4ca71ab26f1b273e7
+local_deployed_files:
+- .agents/skills/find-skills
+- .agents/skills/find-skills/LICENSE
+- .agents/skills/find-skills/SKILL.md
+- .agents/skills/find-skills/skill_kr.md
+- .claude/skills/find-skills
+- .claude/skills/find-skills/LICENSE
+- .claude/skills/find-skills/SKILL.md
+local_deployed_file_hashes:
+  .agents/skills/find-skills/LICENSE: sha256:661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca
+  .agents/skills/find-skills/SKILL.md: sha256:c1b90ed72522b58e1913a72df8bb84b9e78ec188776262f4ca71ab26f1b273e7
+  .agents/skills/find-skills/skill_kr.md: sha256:c1b90ed72522b58e1913a72df8bb84b9e78ec188776262f4ca71ab26f1b273e7
+  .claude/skills/find-skills/LICENSE: sha256:661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca
+  .claude/skills/find-skills/SKILL.md: sha256:c1b90ed72522b58e1913a72df8bb84b9e78ec188776262f4ca71ab26f1b273e7

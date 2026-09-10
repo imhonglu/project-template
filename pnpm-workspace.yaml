@@ -1,0 +1,7 @@
+# 앱·공유 라이브러리·개발 도구를 워크스페이스 패키지로 검색합니다.
+#
+# 참고: https://pnpm.io/pnpm-workspace_yaml
+packages:
+  - "apps/*"
+  - "libs/*"
+  - "tools/*"

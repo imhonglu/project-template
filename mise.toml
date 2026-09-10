@@ -1,0 +1,43 @@
+# 로컬과 CI에서 사용할 개발 도구 버전과 설치·갱신 명령을 관리합니다.
+# 같은 버전을 packageManager나 별도 버전 파일에 중복 선언하지 않습니다.
+# 기존 mise.lock은 자동으로 사용·갱신하므로 lockfile 설정은 생략합니다.
+#
+# 참고: https://mise.jdx.dev/configuration.html
+# 참고: https://mise.jdx.dev/dev-tools/mise-lock.html
+
+# 외부 APM 패키지의 lifecycle 스크립트 실행을 비활성화합니다.
+#
+# 참고: https://microsoft.github.io/apm/reference/cli/install/
+[env]
+APM_NO_SCRIPTS = "1"
+
+[tools]
+node = "26.8.2"
+pnpm = "12.3.4"
+apm = "0.30.0"
+
+# 워크스페이스 의존성·외부 스킬은 잠금 파일대로 설치하고, 로컬 스킬은 현재 원본에서 배포합니다.
+# 로컬 스킬 원본은 Git으로 관리합니다.
+#
+# 참고: https://pnpm.io/cli/install
+# 참고: https://microsoft.github.io/apm/reference/cli/install/
+[tasks.setup]
+description = "의존성·스킬 설치"
+run = ["pnpm install --frozen-lockfile", "apm install --frozen"]
+
+# 개발 도구·워크스페이스 의존성은 메이저 버전을 포함해, 외부 스킬은 선언된 ref 범위에서 갱신합니다.
+# 후속 명령에는 갱신한 개발 도구 버전을 적용합니다.
+# 로컬 macOS ARM64와 CI Linux x64의 잠금 정보를 함께 갱신합니다.
+# 갱신 후 설치·검사 절차는 AGENTS.md의 '도구·의존성 갱신'을 따릅니다.
+#
+# 참고: https://mise.jdx.dev/cli/use.html
+# 참고: https://pnpm.io/cli/update
+# 참고: https://microsoft.github.io/apm/reference/cli/update/
+[tasks.update]
+description = "개발 도구·의존성·외부 스킬 갱신"
+run = [
+  "mise use --pin --path mise.toml node@latest pnpm@latest apm@latest",
+  "mise lock --platform macos-arm64,linux-x64",
+  "mise exec -- pnpm --recursive --include-workspace-root update --latest",
+  "mise exec -- apm update --yes",
+]
