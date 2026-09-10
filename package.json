@@ -6,11 +6,17 @@
   "scripts": {
     "check": "oxfmt --check && oxlint && cspell --no-progress . && pnpm run typecheck && pnpm test",
     "fix": "oxlint --fix && oxfmt",
+    "prepare": "husky",
     "test": "vitest run",
     "typecheck": "tsc && pnpm --recursive --if-present run typecheck"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
+    "@commitlint/types": "^21.2.0",
     "cspell": "10.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.0",
     "oxfmt": "^0.67.0",
     "oxlint": "^1.82.0",
     "oxlint-tsgolint": "^7.0.2001",

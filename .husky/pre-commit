@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+# Git에 스테이징된 파일을 검사합니다.
+#
+# 참고: https://typicode.github.io/husky/how-to.html
+pnpm exec lint-staged
