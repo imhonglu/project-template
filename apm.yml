@@ -1,4 +1,4 @@
-# 루트 패키지와 같은 이름으로 스킬 설치·배포를 관리합니다.
+# 루트 패키지와 같은 이름으로 에이전트 패키지·통합 설정을 관리합니다.
 #
 # 참고: https://microsoft.github.io/apm/consumer/manage-dependencies/
 name: "@project-template/root"

@@ -28,7 +28,7 @@ run = ["pnpm install --frozen-lockfile", "apm install --frozen"]
 # 개발 도구·워크스페이스 의존성은 메이저 버전을 포함해, 외부 스킬은 선언된 ref 범위에서 갱신합니다.
 # 후속 명령에는 갱신한 개발 도구 버전을 적용합니다.
 # 로컬 macOS ARM64와 CI Linux x64의 잠금 정보를 함께 갱신합니다.
-# 갱신 후 설치·검사 절차는 AGENTS.md의 '도구·의존성 갱신'을 따릅니다.
+# 갱신 후 설치·검사 절차는 AGENTS.md의 '도구·의존성 갱신 (mise)'을 따릅니다.
 #
 # 참고: https://mise.jdx.dev/cli/use.html
 # 참고: https://pnpm.io/cli/update

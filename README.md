@@ -17,6 +17,6 @@ pnpm check
 
 ## 안내
 
-- [AGENTS.md](AGENTS.md): 작업 명령·규칙, 패키지·스킬 관리, 갱신·검증 절차
+- [AGENTS.md](AGENTS.md): 작업 명령·규칙, 저장소 구조, 갱신·검증 절차
 - [mise.toml](mise.toml): 개발 도구 버전과 설치·갱신 명령 정의
 - [CI 설정](.github/workflows/ci.yml): 자동 설치·검사 절차
