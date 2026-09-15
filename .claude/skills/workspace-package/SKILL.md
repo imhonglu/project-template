@@ -27,6 +27,7 @@ tools/example/
 ├── package.json
 ├── README.md
 ├── tsconfig.json
+├── vitest.config.ts
 └── src/
     └── index.ts
 ```
@@ -49,10 +50,21 @@ tools/example/
 
 ```json
 {
-  "extends": "../../tsconfig.base.json",
-  "include": ["src"]
+  "extends": "../../tsconfig.base.json"
 }
 ```
+
+`include`를 생략해 패키지의 소스·테스트·설정 파일을 함께 타입 검사합니다.
+
+`vitest.config.ts`
+
+```ts
+import { defineProject } from "vitest/config";
+
+export default defineProject({});
+```
+
+테스트 실행 환경 등 프로젝트 옵션은 패키지별로 지정합니다. 첫 테스트를 추가하면 루트 `vitest.config.ts`의 `passWithNoTests`를 제거합니다.
 
 `src/index.ts`에 요청한 구현을 작성합니다. 골격만 필요하면 `export {};`로 시작합니다.
 
@@ -107,17 +119,7 @@ TypeScript 소스를 직접 처리하는 내부 소비자에게 공유 라이브
 }
 ```
 
-### 4. 테스트 구성
-
-테스트가 있는 패키지에 `vitest.config.ts`를 추가하고 실행 환경 등 프로젝트 옵션을 지정합니다. 첫 테스트를 추가하면 루트 `vitest.config.ts`의 `passWithNoTests`를 제거합니다.
-
-```ts
-import { defineProject } from "vitest/config";
-
-export default defineProject({});
-```
-
-### 5. 의존성·문서 정리
+### 4. 의존성·문서 정리
 
 - 내부 의존성은 `workspace:*`, 공유 버전은 catalog에 선언해 `catalog:`로 참조합니다.
 - 패키지 사용법·설정 근거는 해당 README에 작성합니다.
