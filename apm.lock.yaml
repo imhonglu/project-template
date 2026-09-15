@@ -27,7 +27,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:3ff1d5ca173b763a39566646f9eefee8447b52725a0e30f6aa425713ce3172dd
+  content_hash: sha256:c6b0a41c390d64c7605f22141b405dd4c919f1766760b6f9a14f117efb669718
 - kind: project-relative
   target: claude
   value: .claude/skills/git-commit
@@ -45,7 +45,25 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:a37ddee980bf8502b636af371cfceca17291e3a47f525ad4538807b97036d6ae
+  content_hash: sha256:fdaee3b4e7fee50a5f00e4f87cc3319392631db7f37ce76d570bd19b867c1ff1
+- kind: project-relative
+  target: claude
+  value: .claude/skills/git-pull
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/git-pull/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:47d82c48360fa489829eb75865b12f031a99ce210c88cd587a893c61a2c002b7
 - kind: project-relative
   target: claude
   value: .claude/skills/workspace-package
@@ -63,7 +81,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:f77774dadae4831059e031bab63cb2f8f0433f073e8c1d418f87a5ac114fe1f1
+  content_hash: sha256:43bd5380cbf16f4ece3cc0381512f1e8b8d5f330f8b405452eda23ea7cba68e1
 - kind: project-relative
   target: legacy
   value: .agents/skills/apm
@@ -90,7 +108,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:3ff1d5ca173b763a39566646f9eefee8447b52725a0e30f6aa425713ce3172dd
+  content_hash: sha256:c6b0a41c390d64c7605f22141b405dd4c919f1766760b6f9a14f117efb669718
 - kind: project-relative
   target: legacy
   value: .agents/skills/git-commit
@@ -108,7 +126,25 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:a37ddee980bf8502b636af371cfceca17291e3a47f525ad4538807b97036d6ae
+  content_hash: sha256:fdaee3b4e7fee50a5f00e4f87cc3319392631db7f37ce76d570bd19b867c1ff1
+- kind: project-relative
+  target: legacy
+  value: .agents/skills/git-pull
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: null
+- kind: project-relative
+  target: legacy
+  value: .agents/skills/git-pull/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:47d82c48360fa489829eb75865b12f031a99ce210c88cd587a893c61a2c002b7
 - kind: project-relative
   target: legacy
   value: .agents/skills/workspace-package
@@ -126,13 +162,15 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:f77774dadae4831059e031bab63cb2f8f0433f073e8c1d418f87a5ac114fe1f1
+  content_hash: sha256:43bd5380cbf16f4ece3cc0381512f1e8b8d5f330f8b405452eda23ea7cba68e1
 local_deployed_files:
 - .agents/skills/apm
 - .agents/skills/apm/LICENSE
 - .agents/skills/apm/SKILL.md
 - .agents/skills/git-commit
 - .agents/skills/git-commit/SKILL.md
+- .agents/skills/git-pull
+- .agents/skills/git-pull/SKILL.md
 - .agents/skills/workspace-package
 - .agents/skills/workspace-package/SKILL.md
 - .claude/skills/apm
@@ -140,14 +178,18 @@ local_deployed_files:
 - .claude/skills/apm/SKILL.md
 - .claude/skills/git-commit
 - .claude/skills/git-commit/SKILL.md
+- .claude/skills/git-pull
+- .claude/skills/git-pull/SKILL.md
 - .claude/skills/workspace-package
 - .claude/skills/workspace-package/SKILL.md
 local_deployed_file_hashes:
   .agents/skills/apm/LICENSE: sha256:661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca
-  .agents/skills/apm/SKILL.md: sha256:3ff1d5ca173b763a39566646f9eefee8447b52725a0e30f6aa425713ce3172dd
-  .agents/skills/git-commit/SKILL.md: sha256:a37ddee980bf8502b636af371cfceca17291e3a47f525ad4538807b97036d6ae
-  .agents/skills/workspace-package/SKILL.md: sha256:f77774dadae4831059e031bab63cb2f8f0433f073e8c1d418f87a5ac114fe1f1
+  .agents/skills/apm/SKILL.md: sha256:c6b0a41c390d64c7605f22141b405dd4c919f1766760b6f9a14f117efb669718
+  .agents/skills/git-commit/SKILL.md: sha256:fdaee3b4e7fee50a5f00e4f87cc3319392631db7f37ce76d570bd19b867c1ff1
+  .agents/skills/git-pull/SKILL.md: sha256:47d82c48360fa489829eb75865b12f031a99ce210c88cd587a893c61a2c002b7
+  .agents/skills/workspace-package/SKILL.md: sha256:43bd5380cbf16f4ece3cc0381512f1e8b8d5f330f8b405452eda23ea7cba68e1
   .claude/skills/apm/LICENSE: sha256:661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca
-  .claude/skills/apm/SKILL.md: sha256:3ff1d5ca173b763a39566646f9eefee8447b52725a0e30f6aa425713ce3172dd
-  .claude/skills/git-commit/SKILL.md: sha256:a37ddee980bf8502b636af371cfceca17291e3a47f525ad4538807b97036d6ae
-  .claude/skills/workspace-package/SKILL.md: sha256:f77774dadae4831059e031bab63cb2f8f0433f073e8c1d418f87a5ac114fe1f1
+  .claude/skills/apm/SKILL.md: sha256:c6b0a41c390d64c7605f22141b405dd4c919f1766760b6f9a14f117efb669718
+  .claude/skills/git-commit/SKILL.md: sha256:fdaee3b4e7fee50a5f00e4f87cc3319392631db7f37ce76d570bd19b867c1ff1
+  .claude/skills/git-pull/SKILL.md: sha256:47d82c48360fa489829eb75865b12f031a99ce210c88cd587a893c61a2c002b7
+  .claude/skills/workspace-package/SKILL.md: sha256:43bd5380cbf16f4ece3cc0381512f1e8b8d5f330f8b405452eda23ea7cba68e1
