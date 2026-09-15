@@ -32,7 +32,7 @@ tools/example/
     └── index.ts
 ```
 
-`package.json`
+`package.json`에 비공개 ESM과 타입 검사 스크립트를 선언합니다.
 
 ```json
 {
@@ -46,7 +46,7 @@ tools/example/
 }
 ```
 
-`tsconfig.json`
+`tsconfig.json`은 공통 설정을 상속합니다. `include`를 생략해 패키지의 소스·테스트·설정 파일을 함께 타입 검사합니다.
 
 ```json
 {
@@ -54,17 +54,15 @@ tools/example/
 }
 ```
 
-`include`를 생략해 패키지의 소스·테스트·설정 파일을 함께 타입 검사합니다.
-
-`vitest.config.ts`
+`vitest.config.ts`에 테스트 프로젝트를 선언하고, 실행 환경은 패키지별로 설정합니다.
 
 ```ts
 import { defineProject } from "vitest/config";
 
-export default defineProject({});
+// Knip이 기본 테스트 파일을 인식하도록 test 객체를 유지합니다.
+// 참고: https://knip.dev/reference/plugins/vitest
+export default defineProject({ test: {} });
 ```
-
-테스트 실행 환경 등 프로젝트 옵션은 패키지별로 지정합니다. 첫 테스트를 추가하면 루트 `vitest.config.ts`의 `passWithNoTests`를 제거합니다.
 
 `src/index.ts`에 요청한 구현을 작성합니다. 골격만 필요하면 `export {};`로 시작합니다.
 
@@ -76,8 +74,6 @@ export default defineProject({});
 
 DOM 전역을 제외하고 Node.js의 모듈 해석과 전역 타입을 적용합니다.
 
-`tsconfig.json`
-
 ```json
 {
   "compilerOptions": {
@@ -88,15 +84,9 @@ DOM 전역을 제외하고 Node.js의 모듈 해석과 전역 타입을 적용�
 }
 ```
 
-```sh
-pnpm --filter @project-template/example add -D @types/node
-```
-
 #### 브라우저
 
 번들러를 사용하는 앱 기준입니다.
-
-`tsconfig.json`
 
 ```json
 {
@@ -110,8 +100,6 @@ pnpm --filter @project-template/example add -D @types/node
 ### 3. 공유 진입점 공개
 
 TypeScript 소스를 직접 처리하는 내부 소비자에게 공유 라이브러리를 공개할 때 `package.json`에 진입점을 추가합니다.
-
-`package.json`
 
 ```json
 {
@@ -130,10 +118,9 @@ pnpm install
 
 ## 결과 확인
 
-패키지를 생성한 경우 파일을 정리하고 타입 검사와 루트 전체 검사를 실행합니다.
+패키지를 생성한 경우 파일을 정리하고 패키지 타입 검사를 포함한 루트 전체 검사를 실행합니다.
 
 ```sh
-pnpm --filter @project-template/example typecheck
 pnpm check
 ```
 

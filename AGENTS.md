@@ -11,16 +11,17 @@
 
 ## 명령
 
-| 명령                             | 용도                                 |
-| -------------------------------- | ------------------------------------ |
-| `mise run setup`                 | 의존성·스킬 설치                     |
-| `mise run update`                | 개발 도구·의존성·외부 스킬 갱신      |
-| `pnpm fix`                       | 린트 자동 수정·포맷                  |
-| `pnpm check`                     | 포맷·린트·철자·타입·테스트 순차 검사 |
-| `pnpm typecheck`                 | 루트와 패키지의 타입 검사            |
-| `pnpm test`                      | 전체 Vitest 테스트                   |
-| `pnpm test --project <패키지명>` | 패키지별 테스트                      |
-| `pnpm exec vitest`               | 테스트 감시 모드                     |
+| 명령                             | 용도                                             |
+| -------------------------------- | ------------------------------------------------ |
+| `mise run setup`                 | 의존성·스킬 설치                                 |
+| `mise run update`                | 개발 도구·의존성·외부 스킬 갱신                  |
+| `pnpm fix`                       | 린트 자동 수정·포맷                              |
+| `pnpm check`                     | 포맷·린트·철자·미사용 항목·타입·테스트 순차 검사 |
+| `pnpm knip`                      | 미사용 파일·의존성·내보내기 검사                 |
+| `pnpm typecheck`                 | 루트와 패키지의 타입 검사                        |
+| `pnpm test`                      | 전체 Vitest 테스트                               |
+| `pnpm test --project <패키지명>` | 패키지별 테스트                                  |
+| `pnpm exec vitest`               | 테스트 감시 모드                                 |
 
 명령 정의는 [package.json](package.json)과 [mise.toml](mise.toml), CI 실행 조건은 [CI 설정](.github/workflows/ci.yml)에서 확인합니다.
 
@@ -40,11 +41,20 @@
 
 패키지 검색 범위는 [pnpm-workspace.yaml](pnpm-workspace.yaml)을 따릅니다. 실행 환경·프레임워크·빌드·배포는 패키지별로 구성합니다.
 
-## 설정과 문서
+## 작성 규칙
+
+### 파일·디렉터리
+
+파일 배치는 패키지의 기존 구조를 따릅니다.
+
+- 컴포넌트를 포함한 파일·디렉터리 이름은 `kebab-case`로 통일합니다. `README.md`·`AGENTS.md`·`SKILL.md` 등 정해진 문서명과 도구가 요구하는 이름은 유지합니다.
+
+### 설정·문서
 
 타입 검사는 [tsconfig.base.json](tsconfig.base.json), 린트는 [.oxlintrc.jsonc](.oxlintrc.jsonc), 포맷은 [.oxfmtrc.jsonc](.oxfmtrc.jsonc)와 [.editorconfig](.editorconfig)를 따릅니다.
 
-- 코드의 명명·배치는 패키지의 기존 규칙을 따릅니다.
+미사용 파일·의존성·내보내기 검사는 [.knip.jsonc](.knip.jsonc)를 따릅니다.
+
 - 설정 기본값은 생략합니다. 필요한 주석은 목적·유지 이유·공식 참고 링크 순서로 짧게 씁니다.
 - 주석 블록 위에 빈 줄을 둡니다. 파일 최상단·연속 주석 내부는 제외하며, 객체 시작 직후는 포맷 도구의 결과를 따릅니다.
 - 공통 규칙·저장소 관리 절차는 이 문서, 재사용할 작업 절차·예시는 스킬에 둡니다. 스킬은 저장소 문서·다른 스킬에 의존하지 않도록 작성합니다.
@@ -107,8 +117,7 @@ lint-staged의 수정 결과는 스테이징에 반영하며 부분 스테이징
 
 루트 [vitest.config.ts](vitest.config.ts)가 패키지별 테스트를 모아 실행합니다.
 
-- 테스트 파일은 해당 패키지 안에 두고, 동작 변경 시 필요한 테스트를 추가·수정합니다.
-- 초기 테스트 제한은 [README.md](README.md#시작)를 참고합니다. 테스트를 추가하면 루트의 `passWithNoTests`를 제거합니다.
+초기 테스트 제한은 [README.md](README.md#시작)를 참고합니다. 테스트를 추가하면 루트의 `passWithNoTests`를 제거합니다.
 
 ## 완료 조건
 

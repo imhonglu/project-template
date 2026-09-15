@@ -22,6 +22,6 @@
   // 확장자 없는 LICENSE에도 npm 사전을 적용해 Vercel 오탐을 피합니다.
   "dictionaries": ["npm"],
 
-  // 개발 도구의 고유 이름 중 사전에 없는 단어만 허용합니다.
-  "words": ["tsgolint", "typescriptteam"],
+  // 개발 도구의 고유 이름·식별자 중 사전에 없는 단어만 허용합니다.
+  "words": ["lintignore", "tsgolint", "typescriptteam", "unstub"],
 }

@@ -1,0 +1,13 @@
+// 미사용 파일·의존성·내보내기를 검사합니다.
+// 워크스페이스는 pnpm-workspace.yaml에서 자동으로 탐색합니다.
+//
+// 참고: https://knip.dev/features/monorepos-and-workspaces
+{
+  "$schema": "./node_modules/knip/schema-jsonc.json",
+
+  // @lintignore 태그가 붙은 내보내기는 보고에서 제외합니다.
+  // 정적 분석으로 인식하지 못하는 사용처를 JSDoc에 표시할 때 사용합니다.
+  //
+  // 참고: https://knip.dev/reference/jsdoc-tsdoc-tags
+  "tags": ["-lintignore"],
+}

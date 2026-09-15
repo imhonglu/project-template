@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "oxfmt --check && oxlint && cspell --no-progress . && pnpm run typecheck && pnpm test",
+    "check": "oxfmt --check && oxlint && cspell --no-progress . && pnpm run knip && pnpm run typecheck && pnpm test",
     "fix": "oxlint --fix && oxfmt",
+    "knip": "knip",
     "prepare": "husky",
     "test": "vitest run",
     "typecheck": "tsc && pnpm --recursive --if-present run typecheck"
@@ -14,8 +15,10 @@
     "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.2.2",
     "@commitlint/types": "^21.2.0",
+    "@types/node": "^26.5.1",
     "cspell": "10.3.0",
     "husky": "^9.1.7",
+    "knip": "^6.35.1",
     "lint-staged": "^17.5.1",
     "oxfmt": "^0.67.0",
     "oxlint": "^1.82.0",
