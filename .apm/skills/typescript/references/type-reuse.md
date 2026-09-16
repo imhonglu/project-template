@@ -47,7 +47,9 @@ export function toProductSummary(product: Product): ProductSummary {
 }
 ````
 
-`Pick`·`Omit`은 실행 시 필드를 제거하지 않습니다. 반환할 필드를 제한하려면 위처럼 새 객체를 구성합니다. 내장 유틸리티로 표현할 수 있으면 같은 기능의 조건부·매핑 타입을 다시 만들지 않습니다. [유틸리티 타입](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+`Pick`·`Omit`은 실행 시 필드를 제거하지 않습니다. 반환할 필드를 제한하려면 위처럼 새 객체를 구성합니다.
+
+내장 유틸리티로 표현할 수 있으면 같은 기능의 조건부·매핑 타입을 다시 만들지 않습니다. [유틸리티 타입](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
 ## 객체·키·반환값의 관계 → 제네릭
 

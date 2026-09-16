@@ -27,7 +27,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:2e0148947506ed55f53f36d919f843bb3bf91ddbe1fc0dcfa66905d7e9ebb540
+  content_hash: sha256:ec66c9d0011ab4f651236ad6d55b66f10a64f8f7609324681faffcdd88f82738
 - kind: project-relative
   target: claude
   value: .claude/skills/git-commit
@@ -45,7 +45,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:787eb145ba7b1ac1358e608df2bddbf91dbfa977a51ca1e9c2eb83147e7ad4e7
+  content_hash: sha256:2c912760996896a5b454cbcee19bf01d8b28b3a0f1b4c429edfb593f46323807
 - kind: project-relative
   target: claude
   value: .claude/skills/git-pull
@@ -63,7 +63,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:1162fe52ae5f54e9996fbb4ab6eeba7286660063c55b0c298651ece01c0bd674
+  content_hash: sha256:846c476954d152696ab8fc94b322f50a27789edbc232a522eac35df5acfd2e74
 - kind: project-relative
   target: claude
   value: .claude/skills/testing
@@ -81,7 +81,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:febc81a8d7ac0b895159640004f6fb0554476fa3a03bb4b6290efb12673f228c
+  content_hash: sha256:bc9bd56aa7b177cdc1e66def6caef557c7e360984557860ff37d17dcbc4f0d27
 - kind: project-relative
   target: claude
   value: .claude/skills/testing/references/browser-tests.md
@@ -90,7 +90,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:3167675b550e766f36955b28be456abe96515a5b8b36fa6ee519bd518d8da751
+  content_hash: sha256:43f86be8422d7878e74454d7c9866024ff3f8a300c91e1103ba9a68168b399eb
 - kind: project-relative
   target: claude
   value: .claude/skills/testing/references/integration-tests.md
@@ -99,7 +99,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:42359c90bea4941dc970179051a040a40b2e4e7f065f1478427681a3da7a23d3
+  content_hash: sha256:1c5ce21999546d13213f230e5432eee79b3b30813e958c995d5160d1f2299f14
 - kind: project-relative
   target: claude
   value: .claude/skills/testing/references/mocking.md
@@ -108,7 +108,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:a944ba57cdb69b16e0aaa1e573b440afa498fdabc82c1710890e180cf89bbb4c
+  content_hash: sha256:c46e6d2cea2918135d4c88141ee236787d40889a458e4cfd1530bd225bc90535
 - kind: project-relative
   target: claude
   value: .claude/skills/testing/references/type-tests.md
@@ -117,7 +117,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:3b02ed39d977e561f432f5a79d3c411e8b7fb0c977519fc28ad2fb0ac323edfb
+  content_hash: sha256:6093b0ddc13af95c0ea2e9f12fa5318d2329264f600884880cb143d5f2f50a1b
 - kind: project-relative
   target: claude
   value: .claude/skills/testing/references/unit-tests.md
@@ -144,7 +144,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:003215555b5208e6050c76015e07a4f307008325e5855da6dc251c75da1518be
+  content_hash: sha256:9674097bd555893b0a4988924cd44e7adc40595eafef78757e012de39dfd793e
 - kind: project-relative
   target: claude
   value: .claude/skills/typescript/references/async-patterns.md
@@ -153,7 +153,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:224c632fc9e4386e1fffd47591250b9e64eaafcc8c51df0cacd2773df58f86df
+  content_hash: sha256:157d045349cfa4b898cd1abcc36d90470fa9631a18dd17835f0a16e2989129e1
 - kind: project-relative
   target: claude
   value: .claude/skills/typescript/references/type-patterns.md
@@ -171,7 +171,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:daaed813add47f5661e11bf964a81f4514905abccb9a9751fcce08a9445c4930
+  content_hash: sha256:0ef96ab2a69de19a6463037b08694386201849d5c39ac3f465bd34d393d9e5f0
 - kind: project-relative
   target: claude
   value: .claude/skills/workspace-package
@@ -189,7 +189,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:c52074dc442a1d268ff69827cb149ed6a4df881c1ec98a95a443f48f014ea4d6
+  content_hash: sha256:20cc3b492d878c2fc0d4d597b1536b67b1d59847428fadb7388211176021dce1
 - kind: project-relative
   target: legacy
   value: .agents/skills/apm
@@ -216,7 +216,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:2e0148947506ed55f53f36d919f843bb3bf91ddbe1fc0dcfa66905d7e9ebb540
+  content_hash: sha256:ec66c9d0011ab4f651236ad6d55b66f10a64f8f7609324681faffcdd88f82738
 - kind: project-relative
   target: legacy
   value: .agents/skills/git-commit
@@ -234,7 +234,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:787eb145ba7b1ac1358e608df2bddbf91dbfa977a51ca1e9c2eb83147e7ad4e7
+  content_hash: sha256:2c912760996896a5b454cbcee19bf01d8b28b3a0f1b4c429edfb593f46323807
 - kind: project-relative
   target: legacy
   value: .agents/skills/git-pull
@@ -252,7 +252,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:1162fe52ae5f54e9996fbb4ab6eeba7286660063c55b0c298651ece01c0bd674
+  content_hash: sha256:846c476954d152696ab8fc94b322f50a27789edbc232a522eac35df5acfd2e74
 - kind: project-relative
   target: legacy
   value: .agents/skills/testing
@@ -270,7 +270,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:febc81a8d7ac0b895159640004f6fb0554476fa3a03bb4b6290efb12673f228c
+  content_hash: sha256:bc9bd56aa7b177cdc1e66def6caef557c7e360984557860ff37d17dcbc4f0d27
 - kind: project-relative
   target: legacy
   value: .agents/skills/testing/references/browser-tests.md
@@ -279,7 +279,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:3167675b550e766f36955b28be456abe96515a5b8b36fa6ee519bd518d8da751
+  content_hash: sha256:43f86be8422d7878e74454d7c9866024ff3f8a300c91e1103ba9a68168b399eb
 - kind: project-relative
   target: legacy
   value: .agents/skills/testing/references/integration-tests.md
@@ -288,7 +288,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:42359c90bea4941dc970179051a040a40b2e4e7f065f1478427681a3da7a23d3
+  content_hash: sha256:1c5ce21999546d13213f230e5432eee79b3b30813e958c995d5160d1f2299f14
 - kind: project-relative
   target: legacy
   value: .agents/skills/testing/references/mocking.md
@@ -297,7 +297,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:a944ba57cdb69b16e0aaa1e573b440afa498fdabc82c1710890e180cf89bbb4c
+  content_hash: sha256:c46e6d2cea2918135d4c88141ee236787d40889a458e4cfd1530bd225bc90535
 - kind: project-relative
   target: legacy
   value: .agents/skills/testing/references/type-tests.md
@@ -306,7 +306,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:3b02ed39d977e561f432f5a79d3c411e8b7fb0c977519fc28ad2fb0ac323edfb
+  content_hash: sha256:6093b0ddc13af95c0ea2e9f12fa5318d2329264f600884880cb143d5f2f50a1b
 - kind: project-relative
   target: legacy
   value: .agents/skills/testing/references/unit-tests.md
@@ -333,7 +333,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:003215555b5208e6050c76015e07a4f307008325e5855da6dc251c75da1518be
+  content_hash: sha256:9674097bd555893b0a4988924cd44e7adc40595eafef78757e012de39dfd793e
 - kind: project-relative
   target: legacy
   value: .agents/skills/typescript/references/async-patterns.md
@@ -342,7 +342,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:224c632fc9e4386e1fffd47591250b9e64eaafcc8c51df0cacd2773df58f86df
+  content_hash: sha256:157d045349cfa4b898cd1abcc36d90470fa9631a18dd17835f0a16e2989129e1
 - kind: project-relative
   target: legacy
   value: .agents/skills/typescript/references/type-patterns.md
@@ -360,7 +360,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:daaed813add47f5661e11bf964a81f4514905abccb9a9751fcce08a9445c4930
+  content_hash: sha256:0ef96ab2a69de19a6463037b08694386201849d5c39ac3f465bd34d393d9e5f0
 - kind: project-relative
   target: legacy
   value: .agents/skills/workspace-package
@@ -378,7 +378,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:c52074dc442a1d268ff69827cb149ed6a4df881c1ec98a95a443f48f014ea4d6
+  content_hash: sha256:20cc3b492d878c2fc0d4d597b1536b67b1d59847428fadb7388211176021dce1
 local_deployed_files:
 - .agents/skills/apm
 - .agents/skills/apm/LICENSE
@@ -424,32 +424,32 @@ local_deployed_files:
 - .claude/skills/workspace-package/SKILL.md
 local_deployed_file_hashes:
   .agents/skills/apm/LICENSE: sha256:661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca
-  .agents/skills/apm/SKILL.md: sha256:2e0148947506ed55f53f36d919f843bb3bf91ddbe1fc0dcfa66905d7e9ebb540
-  .agents/skills/git-commit/SKILL.md: sha256:787eb145ba7b1ac1358e608df2bddbf91dbfa977a51ca1e9c2eb83147e7ad4e7
-  .agents/skills/git-pull/SKILL.md: sha256:1162fe52ae5f54e9996fbb4ab6eeba7286660063c55b0c298651ece01c0bd674
-  .agents/skills/testing/SKILL.md: sha256:febc81a8d7ac0b895159640004f6fb0554476fa3a03bb4b6290efb12673f228c
-  .agents/skills/testing/references/browser-tests.md: sha256:3167675b550e766f36955b28be456abe96515a5b8b36fa6ee519bd518d8da751
-  .agents/skills/testing/references/integration-tests.md: sha256:42359c90bea4941dc970179051a040a40b2e4e7f065f1478427681a3da7a23d3
-  .agents/skills/testing/references/mocking.md: sha256:a944ba57cdb69b16e0aaa1e573b440afa498fdabc82c1710890e180cf89bbb4c
-  .agents/skills/testing/references/type-tests.md: sha256:3b02ed39d977e561f432f5a79d3c411e8b7fb0c977519fc28ad2fb0ac323edfb
+  .agents/skills/apm/SKILL.md: sha256:ec66c9d0011ab4f651236ad6d55b66f10a64f8f7609324681faffcdd88f82738
+  .agents/skills/git-commit/SKILL.md: sha256:2c912760996896a5b454cbcee19bf01d8b28b3a0f1b4c429edfb593f46323807
+  .agents/skills/git-pull/SKILL.md: sha256:846c476954d152696ab8fc94b322f50a27789edbc232a522eac35df5acfd2e74
+  .agents/skills/testing/SKILL.md: sha256:bc9bd56aa7b177cdc1e66def6caef557c7e360984557860ff37d17dcbc4f0d27
+  .agents/skills/testing/references/browser-tests.md: sha256:43f86be8422d7878e74454d7c9866024ff3f8a300c91e1103ba9a68168b399eb
+  .agents/skills/testing/references/integration-tests.md: sha256:1c5ce21999546d13213f230e5432eee79b3b30813e958c995d5160d1f2299f14
+  .agents/skills/testing/references/mocking.md: sha256:c46e6d2cea2918135d4c88141ee236787d40889a458e4cfd1530bd225bc90535
+  .agents/skills/testing/references/type-tests.md: sha256:6093b0ddc13af95c0ea2e9f12fa5318d2329264f600884880cb143d5f2f50a1b
   .agents/skills/testing/references/unit-tests.md: sha256:c50754ac959b8e1aca4e95c46271d7b85cc43d852bc289b385943ab9ea5f9cc5
-  .agents/skills/typescript/SKILL.md: sha256:003215555b5208e6050c76015e07a4f307008325e5855da6dc251c75da1518be
-  .agents/skills/typescript/references/async-patterns.md: sha256:224c632fc9e4386e1fffd47591250b9e64eaafcc8c51df0cacd2773df58f86df
+  .agents/skills/typescript/SKILL.md: sha256:9674097bd555893b0a4988924cd44e7adc40595eafef78757e012de39dfd793e
+  .agents/skills/typescript/references/async-patterns.md: sha256:157d045349cfa4b898cd1abcc36d90470fa9631a18dd17835f0a16e2989129e1
   .agents/skills/typescript/references/type-patterns.md: sha256:4ae91bfc883e4d436246693126e39d089220ecd6bbd7990f794689f073456fd4
-  .agents/skills/typescript/references/type-reuse.md: sha256:daaed813add47f5661e11bf964a81f4514905abccb9a9751fcce08a9445c4930
-  .agents/skills/workspace-package/SKILL.md: sha256:c52074dc442a1d268ff69827cb149ed6a4df881c1ec98a95a443f48f014ea4d6
+  .agents/skills/typescript/references/type-reuse.md: sha256:0ef96ab2a69de19a6463037b08694386201849d5c39ac3f465bd34d393d9e5f0
+  .agents/skills/workspace-package/SKILL.md: sha256:20cc3b492d878c2fc0d4d597b1536b67b1d59847428fadb7388211176021dce1
   .claude/skills/apm/LICENSE: sha256:661142e53c313d2bb5e1b055f5c0a39001450ff1b5e27b89dc4bc7de9a6352ca
-  .claude/skills/apm/SKILL.md: sha256:2e0148947506ed55f53f36d919f843bb3bf91ddbe1fc0dcfa66905d7e9ebb540
-  .claude/skills/git-commit/SKILL.md: sha256:787eb145ba7b1ac1358e608df2bddbf91dbfa977a51ca1e9c2eb83147e7ad4e7
-  .claude/skills/git-pull/SKILL.md: sha256:1162fe52ae5f54e9996fbb4ab6eeba7286660063c55b0c298651ece01c0bd674
-  .claude/skills/testing/SKILL.md: sha256:febc81a8d7ac0b895159640004f6fb0554476fa3a03bb4b6290efb12673f228c
-  .claude/skills/testing/references/browser-tests.md: sha256:3167675b550e766f36955b28be456abe96515a5b8b36fa6ee519bd518d8da751
-  .claude/skills/testing/references/integration-tests.md: sha256:42359c90bea4941dc970179051a040a40b2e4e7f065f1478427681a3da7a23d3
-  .claude/skills/testing/references/mocking.md: sha256:a944ba57cdb69b16e0aaa1e573b440afa498fdabc82c1710890e180cf89bbb4c
-  .claude/skills/testing/references/type-tests.md: sha256:3b02ed39d977e561f432f5a79d3c411e8b7fb0c977519fc28ad2fb0ac323edfb
+  .claude/skills/apm/SKILL.md: sha256:ec66c9d0011ab4f651236ad6d55b66f10a64f8f7609324681faffcdd88f82738
+  .claude/skills/git-commit/SKILL.md: sha256:2c912760996896a5b454cbcee19bf01d8b28b3a0f1b4c429edfb593f46323807
+  .claude/skills/git-pull/SKILL.md: sha256:846c476954d152696ab8fc94b322f50a27789edbc232a522eac35df5acfd2e74
+  .claude/skills/testing/SKILL.md: sha256:bc9bd56aa7b177cdc1e66def6caef557c7e360984557860ff37d17dcbc4f0d27
+  .claude/skills/testing/references/browser-tests.md: sha256:43f86be8422d7878e74454d7c9866024ff3f8a300c91e1103ba9a68168b399eb
+  .claude/skills/testing/references/integration-tests.md: sha256:1c5ce21999546d13213f230e5432eee79b3b30813e958c995d5160d1f2299f14
+  .claude/skills/testing/references/mocking.md: sha256:c46e6d2cea2918135d4c88141ee236787d40889a458e4cfd1530bd225bc90535
+  .claude/skills/testing/references/type-tests.md: sha256:6093b0ddc13af95c0ea2e9f12fa5318d2329264f600884880cb143d5f2f50a1b
   .claude/skills/testing/references/unit-tests.md: sha256:c50754ac959b8e1aca4e95c46271d7b85cc43d852bc289b385943ab9ea5f9cc5
-  .claude/skills/typescript/SKILL.md: sha256:003215555b5208e6050c76015e07a4f307008325e5855da6dc251c75da1518be
-  .claude/skills/typescript/references/async-patterns.md: sha256:224c632fc9e4386e1fffd47591250b9e64eaafcc8c51df0cacd2773df58f86df
+  .claude/skills/typescript/SKILL.md: sha256:9674097bd555893b0a4988924cd44e7adc40595eafef78757e012de39dfd793e
+  .claude/skills/typescript/references/async-patterns.md: sha256:157d045349cfa4b898cd1abcc36d90470fa9631a18dd17835f0a16e2989129e1
   .claude/skills/typescript/references/type-patterns.md: sha256:4ae91bfc883e4d436246693126e39d089220ecd6bbd7990f794689f073456fd4
-  .claude/skills/typescript/references/type-reuse.md: sha256:daaed813add47f5661e11bf964a81f4514905abccb9a9751fcce08a9445c4930
-  .claude/skills/workspace-package/SKILL.md: sha256:c52074dc442a1d268ff69827cb149ed6a4df881c1ec98a95a443f48f014ea4d6
+  .claude/skills/typescript/references/type-reuse.md: sha256:0ef96ab2a69de19a6463037b08694386201849d5c39ac3f465bd34d393d9e5f0
+  .claude/skills/workspace-package/SKILL.md: sha256:20cc3b492d878c2fc0d4d597b1536b67b1d59847428fadb7388211176021dce1

@@ -1,7 +1,5 @@
 # 비동기 예제
 
-TypeScript를 직접 실행할 수 있는 Node.js 환경을 사용합니다. 구현은 표시된 파일명으로 저장하고, 각 `@example`은 같은 디렉터리의 `example.ts`에 옮겨 `node example.ts`로 실행합니다.
-
 ## HTTP 응답 검증·오류 전달
 
 [타입 예제](type-patterns.md)의 `user.ts`를 사용합니다. HTTP 상태를 확인한 뒤 응답을 검증하고, 실패하면 원인을 보존해 전달합니다.
@@ -27,8 +25,7 @@ import type { User } from "./user.ts";
  * const originalFetch = globalThis.fetch;
  *
  * try {
- *   globalThis.fetch = () =>
- *     Promise.resolve(Response.json({ id: " u1 ", name: " 민수 " }));
+ *   globalThis.fetch = () => Promise.resolve(Response.json({ id: " u1 ", name: " 민수 " }));
  *
  *   const user = await loadUser("u1");
  *

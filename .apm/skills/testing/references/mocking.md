@@ -46,11 +46,12 @@ export async function getOrderLabel(id: string, loadOrder: OrderLoader): Promise
 import { describe, expect, it, vi } from "vitest";
 
 import { getOrderLabel } from "./order-label.ts";
-import type { OrderLoader } from "./order-label.ts";
+import type { Order, OrderLoader } from "./order-label.ts";
 
 describe("getOrderLabel", () => {
   it("주문이 있으면 해당 주문의 합계를 표시합니다", async () => {
-    const loadOrder = vi.fn<OrderLoader>().mockResolvedValue({ id: "order-1", total: 3600 });
+    const order: Order = { id: "order-1", total: 3600 };
+    const loadOrder = vi.fn<OrderLoader>().mockResolvedValue(order);
 
     const label = await getOrderLabel("order-1", loadOrder);
 
@@ -73,7 +74,8 @@ describe("getOrderLabel", () => {
 });
 ```
 
-테스트마다 `vi.fn<OrderLoader>()`를 새로 만들어 호출 이력과 구현을 공유하지 않습니다. 호출 인수 단언은 **조회할 주문 ID가 외부 의존성으로 전달되는 계약**을 확인합니다. 내부 함수의 호출 순서는 검증하지 않습니다.
+- 테스트마다 `vi.fn<OrderLoader>()`를 새로 만들어 호출 이력과 구현을 격리합니다.
+- 호출 인수 단언은 조회할 주문 ID가 외부 의존성에 전달되는지 확인합니다. 내부 함수의 호출 순서는 검증하지 않습니다.
 
 ## import한 외부 모듈 대체
 
@@ -99,6 +101,7 @@ export async function loadWelcomeMessage(filePath: string): Promise<string> {
 ```ts
 // welcome-message.unit.test.ts
 import { readFile } from "node:fs/promises";
+
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { loadWelcomeMessage } from "./welcome-message.ts";

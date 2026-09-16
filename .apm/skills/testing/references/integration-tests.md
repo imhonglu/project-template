@@ -36,6 +36,7 @@ export function readNote(filePath: string): Promise<string> {
 import { mkdtempDisposable } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+
 import { it } from "vitest";
 
 import { readNote, saveNote } from "./note-store.ts";
@@ -62,7 +63,7 @@ it.concurrent.for([
 });
 ```
 
-`it.for`는 입력과 테스트 컨텍스트를 각각 전달합니다. 두 번째 인수의 `{ expect }`로 현재 테스트에 연결된 단언을 사용합니다. [매개변수화 테스트](https://main.vitest.dev/api/test#test-for)
+`it.for`는 입력과 테스트 컨텍스트를 각각 전달합니다. 두 번째 인수의 `{ expect }`로 현재 테스트에 연결된 단언을 사용합니다. [매개변수화 테스트](https://vitest.dev/api/test#test-for)
 
 `await using`은 테스트 콜백이 정상 종료되거나 예외로 끝나도 디렉터리와 내용을 삭제합니다. [Node.js 임시 디렉터리 정리](https://nodejs.org/api/fs.html#fspromisesmkdtempdisposableprefix-options)
 

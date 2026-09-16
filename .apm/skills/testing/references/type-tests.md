@@ -47,6 +47,8 @@ it("빈 목록이면 undefined를 반환합니다", () => {
 });
 ```
 
-기대 타입은 호출자의 계약을 직접 명시합니다. `ReturnType<typeof firstItem>`에서 가져오면 반환 타입이 잘못 바뀌어도 기대 타입이 함께 바뀝니다. 위 예제는 반환 타입을 `unknown`으로 넓히면 `typecheck`에서 실패합니다.
+기대 타입은 호출자의 계약을 직접 명시합니다. `ReturnType<typeof firstItem>`에서 가져오면 잘못된 반환 타입 변경도 그대로 따라갑니다.
+
+위 예제는 반환 타입을 `unknown`으로 넓히면 `typecheck`에서 실패합니다.
 
 참고: [Vitest 타입 테스트](https://vitest.dev/guide/testing-types)·[expectTypeOf](https://vitest.dev/api/expect-typeof).

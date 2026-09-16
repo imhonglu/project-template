@@ -22,6 +22,7 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 - 타입은 사용하는 코드 가까이에 두고, 여러 모듈이 공유할 때 분리합니다.
 - 사용하는 심벌만 named export로 공개합니다. 도구가 요구하면 default export를 사용합니다.
 - 타입 의존성은 `import type`·`export type`으로 표시합니다. import 경로·확장자는 모듈 해석·빌드 방식에 맞추고, 정렬·서식은 설정된 도구에 맡깁니다.
+- 타입 제거만으로 실행할 수 있는 문법을 사용합니다. `enum` 대신 `as const` 목록·객체를, `namespace` 대신 모듈을 사용하고, 생성자 매개변수 속성은 명시적으로 선언합니다.
 
 ### 이름·간격
 
@@ -49,11 +50,12 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 | 외부 입력             | `unknown`으로 받고 기존 스키마나 조건 검사로 검증                                  |
 | 값의 구조 검사        | `satisfies`; 리터럴 고정이 필요할 때 `as const` 병용                               |
 | 선택 속성             | 생략과 `undefined`를 구분; 생략은 속성 자체를 만들지 않음                          |
+| 인덱스 조회           | 배열·레코드 조회 결과의 `undefined`를 처리; 존재를 확인한 뒤 사용                  |
 | 단언·오류 억제        | `as`·`!`·`any`로 검증을 우회하지 않음; 불가피한 단언은 근거와 적용 범위를 명시     |
 
 `satisfies`·타입 선언은 실행 시 입력을 검증하지 않습니다. 제네릭은 값 사이의 타입 관계를 보존할 때 사용하고, 타입 매개변수와 제약은 필요한 만큼만 둡니다.
 
-외부 타입 선언의 오류가 확인돼 임시 억제가 필요하면 해당 줄에 `@ts-expect-error`와 이유·제거 조건을 남깁니다. 오류가 사라졌을 때도 통과하는 `@ts-ignore`보다 제거 시점을 확인하기 쉽습니다. [타입 오류 억제](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html#ts-expect-error-comments)
+외부 타입 선언의 오류를 임시로 억제해야 하면 `@ts-expect-error`와 이유·제거 조건을 남깁니다. `@ts-ignore`와 달리 오류가 사라지면 억제 주석도 검사에 실패합니다. [타입 오류 억제](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html#ts-expect-error-comments)
 
 ### 비동기·오류·자원
 
@@ -61,7 +63,7 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 - 호출부가 기다릴 Promise는 반환하거나 `await`합니다. 분리한 백그라운드 작업에는 실패 처리와 종료 시점을 둡니다.
 - `catch`는 복구 또는 맥락 추가가 필요할 때 사용합니다. 맥락을 추가하면 `new Error(message, { cause })`로 원인을 보존합니다.
 - 빈 배열·`null` 등으로 복구할 수 있는 실패를 명시합니다. HTTP 오류·파싱 실패를 정상 응답으로 바꾸지 않습니다.
-- 실행 환경과 API가 지원하면 `using`·`await using`으로 자원을 정리합니다. 자원을 사용하는 비동기 작업은 스코프가 끝나기 전에 기다리며, 스코프 밖에서 공유하는 자원은 실제 사용 수명에 맞춰 정리합니다.
+- 실행 환경과 API가 지원하면 `using`·`await using`으로 자원을 정리합니다. 자원을 사용하는 비동기 작업은 스코프가 끝나기 전에 기다립니다. 스코프 밖에서 공유하는 자원은 실제 사용 수명에 맞춰 정리합니다.
 
 ### TSDoc 문서화
 
@@ -80,10 +82,13 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 | `@see {@link parseUser}` | 생성·변환·소비 등 관련 API를 별도 목록으로 연결                    |
 | `@deprecated`            | 사용 중단 이유와 대체 API·이전 방법                                |
 
-- 사용 예는 import·입력 준비·호출을 포함하고, `console.log` 옆 주석에 기대 출력을 적습니다. 비동기는 `await`하며 외부 서비스·파일 등 실행 전제를 명시합니다. 타입 추론 설명은 출력과 구분합니다. [사용 예 태그](https://tsdoc.org/pages/tags/example/)
+- 사용 예는 import·입력 준비·호출을 포함합니다. `console.log` 옆 주석에 기대 출력을 적고 타입 추론 설명과 구분합니다. [사용 예 태그](https://tsdoc.org/pages/tags/example/)
+- 비동기 호출은 `await`하고, 외부 서비스·파일 등 실행 전제를 명시합니다.
 - 반환 타입과 생성 함수처럼 함께 알아야 할 선언을 연결합니다. 링크는 문맥에 필요한 곳에 두고, 같은 대상을 본문과 `@see`에 반복하지 않습니다. [인라인 링크](https://tsdoc.org/pages/tags/link/)·[관련 항목](https://tsdoc.org/pages/tags/see/)
 
 ### 예제 선택
+
+구현은 표시된 파일명으로 저장합니다. `@example`은 구현과 같은 디렉터리의 임시 `.ts` 파일에 옮겨 TypeScript를 직접 실행할 수 있는 Node.js에서 실행합니다.
 
 | 필요한 패턴                                           | 참고 파일                                   |
 | ----------------------------------------------------- | ------------------------------------------- |
@@ -94,7 +99,7 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 ## 결과 확인
 
 - 프로젝트의 `typecheck`·`test` 스크립트로 관련 검사를 실행하고, 최종 검증은 `check`를 사용합니다. 전체 검사에 포함된 단계는 중복 실행하지 않습니다.
-- 주석 속 사용 예는 검사 대상 파일로 옮겨 타입 검사와 실행으로 확인합니다.
+- 변경한 `@example`은 임시 파일도 타입 검사 대상에 포함해 검증한 뒤 제거합니다. 계속 검증할 사용 예는 테스트로 남깁니다.
 - 공개 API 변경이 호출부·TSDoc·사용 예에도 반영됐는지 확인하고, 검증 결과와 미실행 범위를 보고합니다.
 
 컨벤션 참고: [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)·[LobeHub TypeScript 가이드](https://github.com/lobehub/lobehub/blob/canary/.agents/skills/typescript/SKILL.md)·[TypeScript Advanced Types](https://github.com/wshobson/agents/blob/main/plugins/javascript-typescript/skills/typescript-advanced-types/SKILL.md).
