@@ -5,7 +5,7 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 
 # TypeScript 작성
 
-기존 공개 API와 실행 환경을 유지하며 아래 컨벤션을 적용합니다.
+기존 공개 API와 실행 환경을 확인하고 요청 범위에 아래 컨벤션을 적용합니다.
 
 ## 사용 시점
 
@@ -53,9 +53,31 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 | 인덱스 조회           | 배열·레코드 조회 결과의 `undefined`를 처리; 존재를 확인한 뒤 사용                  |
 | 단언·오류 억제        | `as`·`!`·`any`로 검증을 우회하지 않음; 불가피한 단언은 근거와 적용 범위를 명시     |
 
-`satisfies`·타입 선언은 실행 시 입력을 검증하지 않습니다. 제네릭은 값 사이의 타입 관계를 보존할 때 사용하고, 타입 매개변수와 제약은 필요한 만큼만 둡니다.
+`as const`는 목록의 리터럴 타입을 유지하고, `satisfies`는 추론 결과를 유지하면서 필요한 키와 값 타입을 검사합니다.
+
+```ts
+// access-level.ts
+
+/** {@link AccessLevel}의 원본이 되는 권한 목록입니다. */
+export const ACCESS_LEVELS = ["reader", "editor"] as const;
+
+/** {@link ACCESS_LEVELS}에 포함된 권한입니다. */
+export type AccessLevel = (typeof ACCESS_LEVELS)[number];
+
+/** {@link AccessLevel}별 화면 표시 문구입니다. */
+export const ACCESS_LABELS = {
+  reader: "읽기",
+  editor: "편집",
+} as const satisfies Record<AccessLevel, string>;
+```
+
+리터럴 고정이 필요 없으면 `as const`를 생략합니다. `satisfies`·타입 선언은 실행 시 입력을 검증하지 않습니다. [satisfies 연산자](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)
+
+제네릭은 값 사이의 타입 관계를 보존할 때 사용하고, 타입 매개변수와 제약은 필요한 만큼만 둡니다.
 
 외부 타입 선언의 오류를 임시로 억제해야 하면 `@ts-expect-error`와 이유·제거 조건을 남깁니다. `@ts-ignore`와 달리 오류가 사라지면 억제 주석도 검사에 실패합니다. [타입 오류 억제](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html#ts-expect-error-comments)
+
+입력 검증·상태·읽기 전용·선택 속성을 구현할 때 [타입 예제](references/type-patterns.md)를, 타입 파생·제네릭을 작성할 때 [타입 재사용 예제](references/type-reuse.md)를 읽습니다.
 
 ### 비동기·오류·자원
 
@@ -65,7 +87,11 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 - 빈 배열·`null` 등으로 복구할 수 있는 실패를 명시합니다. HTTP 오류·파싱 실패를 정상 응답으로 바꾸지 않습니다.
 - 실행 환경과 API가 지원하면 `using`·`await using`으로 자원을 정리합니다. 자원을 사용하는 비동기 작업은 스코프가 끝나기 전에 기다립니다. 스코프 밖에서 공유하는 자원은 실제 사용 수명에 맞춰 정리합니다.
 
+HTTP 응답 처리·병렬 I/O를 구현할 때 [비동기 예제](references/async-patterns.md)를 읽습니다. HTTP 예제는 [타입 예제](references/type-patterns.md)의 `user.ts`와 함께 사용합니다.
+
 ### TSDoc 문서화
+
+함수의 입력·반환·오류와 사용 예를 문서화할 때는 [타입 예제](references/type-patterns.md)의 `parseUser`를, 타입 매개변수의 관계는 [타입 재사용 예제](references/type-reuse.md)의 `getProperty`를 참고합니다.
 
 - 공개 함수·타입·클래스 등 모듈 API와 공유 도우미는 선언 바로 위에 `/** ... */`로 문서화합니다. 내부 선언도 이름·타입만으로 사용 조건을 알기 어려우면 작성합니다.
 - 첫 문장은 목적을 요약합니다. 속성에는 단위·허용 범위·생략 의미를, 함수에는 호출자가 알아야 할 동작을 설명합니다. 구현 선택의 이유는 해당 코드 옆 `//` 주석에 둡니다.
@@ -86,20 +112,10 @@ description: TypeScript 코드를 타입·모듈·비동기·TSDoc 컨벤션과 
 - 비동기 호출은 `await`하고, 외부 서비스·파일 등 실행 전제를 명시합니다.
 - 반환 타입과 생성 함수처럼 함께 알아야 할 선언을 연결합니다. 링크는 문맥에 필요한 곳에 두고, 같은 대상을 본문과 `@see`에 반복하지 않습니다. [인라인 링크](https://tsdoc.org/pages/tags/link/)·[관련 항목](https://tsdoc.org/pages/tags/see/)
 
-### 예제 선택
-
-구현은 표시된 파일명으로 저장합니다. `@example`은 구현과 같은 디렉터리의 임시 `.ts` 파일에 옮겨 TypeScript를 직접 실행할 수 있는 Node.js에서 실행합니다.
-
-| 필요한 패턴                                           | 참고 파일                                   |
-| ----------------------------------------------------- | ------------------------------------------- |
-| 입력 검증·상태 유니온·읽기 전용·선택 속성·`satisfies` | [타입 예제](references/type-patterns.md)    |
-| 타입 파생·키에 따른 반환 타입·제네릭 선택             | [타입 재사용](references/type-reuse.md)     |
-| HTTP 응답 검증·오류 전달·독립 작업 병렬 처리          | [비동기 예제](references/async-patterns.md) |
-
 ## 결과 확인
 
 - 프로젝트의 `typecheck`·`test` 스크립트로 관련 검사를 실행하고, 최종 검증은 `check`를 사용합니다. 전체 검사에 포함된 단계는 중복 실행하지 않습니다.
-- 변경한 `@example`은 임시 파일도 타입 검사 대상에 포함해 검증한 뒤 제거합니다. 계속 검증할 사용 예는 테스트로 남깁니다.
+- 예제 구현은 표시된 파일명으로 저장하고, 변경한 `@example`은 같은 프로젝트의 임시 파일로 옮겨 타입 검사합니다. Node.js·브라우저 등 대상 환경에서 실행한 뒤 임시 파일을 제거합니다. 계속 검증할 사용 예는 테스트로 남깁니다.
 - 공개 API 변경이 호출부·TSDoc·사용 예에도 반영됐는지 확인하고, 검증 결과와 미실행 범위를 보고합니다.
 
 컨벤션 참고: [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)·[LobeHub TypeScript 가이드](https://github.com/lobehub/lobehub/blob/canary/.agents/skills/typescript/SKILL.md)·[TypeScript Advanced Types](https://github.com/wshobson/agents/blob/main/plugins/javascript-typescript/skills/typescript-advanced-types/SKILL.md).

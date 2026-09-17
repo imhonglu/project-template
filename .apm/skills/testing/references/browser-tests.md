@@ -1,10 +1,6 @@
 # 브라우저 테스트
 
-## 실행 조건
-
-Vitest 브라우저 모드와 provider가 구성된 패키지에서 실행합니다. 이 예제의 `page`·`expect.element` 타입을 사용하려면 provider 패키지도 설치되어 있어야 합니다.
-
-브라우저 테스트가 Node 프로젝트에도 포함되지 않도록 `include`·`exclude`를 설정합니다. JSX를 사용하면 해당 프레임워크의 렌더러와 `.tsx` 확장자를 사용합니다.
+Vitest 브라우저 모드와 provider 패키지가 구성된 환경에서 실행합니다. `page`·`expect.element` 타입도 provider에 의존합니다. 브라우저 테스트가 Node 프로젝트에 포함되지 않도록 `include`·`exclude`를 설정합니다.
 
 ## 버튼 클릭으로 수량 증가
 
@@ -72,6 +68,8 @@ it("수량 추가 버튼을 누르면 화면의 수량이 1 증가합니다", as
 | 화면 결과   | `await expect.element(locator)`; 고정 시간 대기 생략                       |
 | 정리        | 직접 만든 DOM은 제거; 프레임워크 렌더러의 cleanup 지원 여부 확인           |
 
-`querySelector(...).click()`·수동 이벤트 호출로 브라우저의 조작 가능 상태 검사를 우회하지 않습니다. 전체 앱의 페이지 전환·인증 흐름을 검증할 때는 해당 앱의 E2E 실행 환경을 사용합니다.
+`querySelector(...).click()`·수동 이벤트 호출로 브라우저의 조작 가능 상태 검사를 우회하지 않습니다.
+
+JSX를 사용하는 UI는 프레임워크 렌더러와 `.tsx` 확장자로 바꿉니다. 전체 앱의 페이지 전환·인증 흐름은 해당 앱의 E2E 실행 환경에서 검증합니다.
 
 참고: [Vitest 컴포넌트 테스트](https://vitest.dev/guide/browser/component-testing)·[Playwright 테스트 원칙](https://playwright.dev/docs/best-practices).

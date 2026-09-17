@@ -2,9 +2,7 @@
 
 ## HTTP 응답 검증·오류 전달
 
-[타입 예제](type-patterns.md)의 `user.ts`를 사용합니다. HTTP 상태를 확인한 뒤 응답을 검증하고, 실패하면 원인을 보존해 전달합니다.
-
-`api.example.com`은 가상 API 주소이므로 실제 서비스에서는 요청 주소를 교체합니다. 사용 예는 독립된 Node.js 프로세스에서 `fetch`를 고정 응답으로 대체하고 실행 후 복구합니다.
+[타입 예제](type-patterns.md)의 `user.ts`를 같은 디렉터리에 둡니다. 사용 예는 독립된 Node.js 프로세스에서 `fetch`를 고정 응답으로 대체하므로 외부 요청 없이 실행할 수 있습니다. 실제 서비스에 적용할 때는 가상 주소 `api.example.com`을 교체합니다.
 
 ````ts
 // user-client.ts
@@ -57,9 +55,7 @@ HTTP 오류·파싱 실패를 빈 값으로 바꾸지 않습니다. API에서 �
 
 ## 파일 읽기는 병렬로, 결과 저장은 순차로
 
-두 입력 파일은 독립적으로 읽지만, 출력 파일은 두 결과가 준비된 뒤 작성합니다.
-
-사용 예는 `mkdtempDisposable`·`await using`을 지원하는 환경에서 실행합니다. 스코프가 끝나면 임시 디렉터리와 내용을 자동 삭제합니다. [Node.js 임시 디렉터리 정리](https://nodejs.org/api/fs.html#fspromisesmkdtempdisposableprefix-options)
+두 입력 파일을 독립적으로 읽고 두 결과가 준비된 뒤 저장합니다. 사용 예는 `mkdtempDisposable`·`await using`을 지원하는 Node.js에서 실행하며, 스코프가 끝나면 임시 디렉터리와 내용을 삭제합니다. [임시 디렉터리 정리](https://nodejs.org/api/fs.html#fspromisesmkdtempdisposableprefix-options)
 
 ````ts
 // combine-files.ts

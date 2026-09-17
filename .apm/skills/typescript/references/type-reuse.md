@@ -47,9 +47,7 @@ export function toProductSummary(product: Product): ProductSummary {
 }
 ````
 
-`Pick`·`Omit`은 실행 시 필드를 제거하지 않습니다. 반환할 필드를 제한하려면 위처럼 새 객체를 구성합니다.
-
-내장 유틸리티로 표현할 수 있으면 같은 기능의 조건부·매핑 타입을 다시 만들지 않습니다. [유틸리티 타입](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+`Pick`·`Omit`은 타입만 파생하므로 반환할 필드를 제한하려면 위처럼 새 객체를 만듭니다. 내장 유틸리티로 표현할 수 있으면 별도 조건부·매핑 타입을 만들지 않습니다. [유틸리티 타입](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
 ## 객체·키·반환값의 관계 → 제네릭
 
@@ -79,6 +77,4 @@ export function getProperty<T, K extends keyof T>(value: T, key: K): T[K] {
 }
 ````
 
-존재하지 않는 키를 전달하면 타입 오류가 됩니다. `key: string`과 `unknown` 반환값으로 관계를 잃지 않습니다.
-
-타입 관계를 보존할 필요가 없으면 `formatLabel(value: string): string`처럼 구체 타입을 사용합니다. 조건부·재귀 타입은 단순한 타입으로 필요한 관계를 표현할 수 없을 때 도입합니다. [제네릭 함수 작성 기준](https://www.typescriptlang.org/docs/handbook/2/functions.html#guidelines-for-writing-good-generic-functions)
+존재하지 않는 키는 타입 오류가 되고, 반환 타입은 선택한 속성을 따릅니다. 관계를 보존할 필요가 없으면 `formatLabel(value: string): string`처럼 구체 타입을 사용합니다. 조건부·재귀 타입은 단순한 타입으로 표현할 수 없을 때 도입합니다. [제네릭 함수 작성 기준](https://www.typescriptlang.org/docs/handbook/2/functions.html#guidelines-for-writing-good-generic-functions)

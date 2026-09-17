@@ -94,32 +94,6 @@ export function getUserLabel(state: UserState): string {
 }
 ```
 
-## 고정 목록·설정 → `as const`·`satisfies`
-
-`as const`는 목록의 리터럴 타입을 유지하고, `satisfies`는 추론 결과를 유지하면서 필요한 키와 값 타입을 검사합니다.
-
-```ts
-// access-level.ts
-
-/**
- * 지원하는 권한 목록입니다.
- *
- * @see {@link AccessLevel} - 목록에서 파생한 권한 타입
- */
-export const ACCESS_LEVELS = ["reader", "editor"] as const;
-
-/** {@link ACCESS_LEVELS}에 포함된 권한입니다. */
-export type AccessLevel = (typeof ACCESS_LEVELS)[number];
-
-/** {@link AccessLevel}별 화면 표시 문구입니다. */
-export const ACCESS_LABELS = {
-  reader: "읽기",
-  editor: "편집",
-} as const satisfies Record<AccessLevel, string>;
-```
-
-리터럴 고정이 필요 없는 일반 객체에는 `as const`를 붙이지 않습니다. [satisfies 연산자](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)
-
 ## 읽기 전용 입력 → 새 배열로 변환
 
 `readonly`는 해당 참조를 통한 변경을 타입 검사로 제한합니다. 입력 배열의 순서를 유지하며 정렬할 때는 `sort()` 대신 새 배열을 반환하는 `toSorted()`를 사용합니다.

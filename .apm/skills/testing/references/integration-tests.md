@@ -2,7 +2,7 @@
 
 ## 실제 파일에 저장한 메모 다시 읽기
 
-`mkdtempDisposable`·`await using`을 지원하는 Node.js 환경의 예제입니다. 입력별 테스트를 동시에 실행하며 각각 새 임시 디렉터리에서 저장·조회합니다.
+`mkdtempDisposable`·`await using`을 지원하는 Node.js 환경의 예제입니다. 입력별 테스트를 동시에 실행하며 각각 새 임시 디렉터리에서 실제 파일 I/O를 검증합니다.
 
 ```ts
 // note-store.ts
@@ -66,8 +66,6 @@ it.concurrent.for([
 `it.for`는 입력과 테스트 컨텍스트를 각각 전달합니다. 두 번째 인수의 `{ expect }`로 현재 테스트에 연결된 단언을 사용합니다. [매개변수화 테스트](https://vitest.dev/api/test#test-for)
 
 `await using`은 테스트 콜백이 정상 종료되거나 예외로 끝나도 디렉터리와 내용을 삭제합니다. [Node.js 임시 디렉터리 정리](https://nodejs.org/api/fs.html#fspromisesmkdtempdisposableprefix-options)
-
-이 예제에서 `readFile`·`writeFile`을 모킹하면 파일 저장·조회 경계를 검증할 수 없습니다.
 
 ## 다른 자원에 적용
 
