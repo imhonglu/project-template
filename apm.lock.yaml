@@ -126,7 +126,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:70e94bb258b753ac76331385db1f07ac22daf34d40267ace547a6f485f98cf95
+  content_hash: sha256:6de304edc67423aedef4c1383d51596a53f3836e750b4452362e04adb7ccc682
 - kind: project-relative
   target: claude
   value: .claude/skills/typescript/references/async-patterns.md
@@ -324,7 +324,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:70e94bb258b753ac76331385db1f07ac22daf34d40267ace547a6f485f98cf95
+  content_hash: sha256:6de304edc67423aedef4c1383d51596a53f3836e750b4452362e04adb7ccc682
 - kind: project-relative
   target: legacy
   value: .agents/skills/typescript/references/async-patterns.md
@@ -452,7 +452,7 @@ local_deployed_file_hashes:
   .agents/skills/testing/references/mocking.md: sha256:17a821b05f80e73947b2862b8265613b891c5880d6ee972419956f7a6933b0b3
   .agents/skills/testing/references/type-tests.md: sha256:5ffacd36a4a946b0ddfd0ee1faa3932707acebbb49dcd2b92d2cbe9318d7d299
   .agents/skills/testing/references/unit-tests.md: sha256:8132461f3cc529fabc29c21db8156ba91c209e2fa07cf64f1849cf46f0597eac
-  .agents/skills/typescript/SKILL.md: sha256:70e94bb258b753ac76331385db1f07ac22daf34d40267ace547a6f485f98cf95
+  .agents/skills/typescript/SKILL.md: sha256:6de304edc67423aedef4c1383d51596a53f3836e750b4452362e04adb7ccc682
   .agents/skills/typescript/references/async-patterns.md: sha256:5378e4906e18685b803ff04fecb79ad179f38ab91676de02c99291af8992a9af
   .agents/skills/typescript/references/type-patterns.md: sha256:40856855a45f9b8de9ce7fd8364933df0bc051c098d73eeeb91f408cd9278620
   .agents/skills/typescript/references/type-reuse.md: sha256:f17ff543de2dccba2f12f1edd664a61e12adb41b3fefc636087de4232948a440
@@ -469,7 +469,7 @@ local_deployed_file_hashes:
   .claude/skills/testing/references/mocking.md: sha256:17a821b05f80e73947b2862b8265613b891c5880d6ee972419956f7a6933b0b3
   .claude/skills/testing/references/type-tests.md: sha256:5ffacd36a4a946b0ddfd0ee1faa3932707acebbb49dcd2b92d2cbe9318d7d299
   .claude/skills/testing/references/unit-tests.md: sha256:8132461f3cc529fabc29c21db8156ba91c209e2fa07cf64f1849cf46f0597eac
-  .claude/skills/typescript/SKILL.md: sha256:70e94bb258b753ac76331385db1f07ac22daf34d40267ace547a6f485f98cf95
+  .claude/skills/typescript/SKILL.md: sha256:6de304edc67423aedef4c1383d51596a53f3836e750b4452362e04adb7ccc682
   .claude/skills/typescript/references/async-patterns.md: sha256:5378e4906e18685b803ff04fecb79ad179f38ab91676de02c99291af8992a9af
   .claude/skills/typescript/references/type-patterns.md: sha256:40856855a45f9b8de9ce7fd8364933df0bc051c098d73eeeb91f408cd9278620
   .claude/skills/typescript/references/type-reuse.md: sha256:f17ff543de2dccba2f12f1edd664a61e12adb41b3fefc636087de4232948a440
