@@ -1,8 +1,10 @@
 # 공유 진입점
 
-## 공통 API → 단일 배럴
+아래 JSON은 `package.json`에 추가할 필드입니다. 소비자가 TypeScript 소스를 직접 처리하며, 공개할 모듈이 해당 경로에 구현되어 있다고 가정합니다.
 
-TypeScript 소스를 직접 처리하는 소비자에게 공개하는 `package.json` 필드입니다. `src/index.ts`는 공통 API의 배럴이며, import 시 필요한 부수 효과가 없는 패키지를 가정합니다.
+## 단일 배럴
+
+`src/index.ts`에서 공통 API를 공개합니다. import 시 필요한 부수 효과가 없을 때 `sideEffects: false`를 선언합니다.
 
 ```json
 {
@@ -11,7 +13,7 @@ TypeScript 소스를 직접 처리하는 소비자에게 공개하는 `package.j
 }
 ```
 
-## 브라우저·테스트 API → 하위 경로
+## 환경별 하위 경로
 
 공통 API에 전용 의존성이 섞이지 않도록 진입점을 나눕니다.
 
@@ -43,7 +45,7 @@ export * from "./create-store-fixture.ts";
 
 루트 배럴은 공통 API만 내보냅니다. Node.js 전용 API는 `./node`, 브라우저 전용 테스트 도우미는 `./testing/browser`처럼 필요한 경계만 추가합니다. [Node.js 하위 경로](https://nodejs.org/api/packages.html#subpath-exports)·[조건부 진입점](https://nodejs.org/api/packages.html#conditional-exports)
 
-## CSS·전역 등록 → 부수 효과 파일 지정
+## 부수 효과 파일
 
 CSS와 import 시 실행되는 등록 코드가 있다면 `false` 대신 파일 목록을 선언합니다. 등록은 소비자가 별도 경로를 import하도록 공개할 수 있습니다.
 

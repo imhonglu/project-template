@@ -51,7 +51,6 @@ describe("getShippingFee", () => {
 });
 ```
 
-- 같은 흐름의 정상·경계 사례는 `it.each`로 묶고, 오류 검증은 분리합니다.
-- 기대값은 계산식을 반복하지 않고 고정값으로 작성합니다. 실패 사례도 `number` 안에서 선택해 `as any` 없이 검증합니다.
+기대값은 계산식을 반복하지 않고 고정값으로 작성합니다. 실패 사례도 `number` 안에서 선택해 `as any` 없이 검증합니다.
 
 참고: [it.each](https://vitest.dev/api/test#test-each)·[toThrow](https://vitest.dev/api/expect#tothrow).

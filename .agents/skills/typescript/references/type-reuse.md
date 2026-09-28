@@ -1,17 +1,17 @@
 # 타입 재사용
 
-## 같은 계약의 부분·변형 → 내장 유틸리티
+## 계약 파생
 
-원본의 필드 변경을 함께 반영할 타입은 `Pick`·`Omit`으로 파생합니다. 별도로 진화해야 하는 API 계약까지 같은 타입에 묶지는 않습니다.
+원본과 함께 바뀌는 계약에 `Pick`·`Omit`을 사용합니다. 독립적인 계약은 별도로 정의합니다.
 
 ````ts
 // product.ts
 
 /**
- * 상품 목록과 생성 입력에서 공유하는 상품 정보입니다.
+ * 상품 목록과 생성 입력에서 공유하는 정보입니다.
  *
- * @see {@link ProductSummary} - 목록용 상품 정보
- * @see {@link CreateProductInput} - 상품 생성 입력
+ * @see {@link ProductSummary} - 목록에 공개할 정보
+ * @see {@link CreateProductInput} - 식별자를 할당하기 전 입력
  */
 export interface Product {
   readonly id: string;
@@ -19,18 +19,17 @@ export interface Product {
   price: number;
 }
 
-/**
- * {@link Product}에서 가격을 제외한 목록용 상품 정보입니다.
- *
- * @see {@link toProductSummary} - 실제 객체에서 공개할 필드 선택
- */
+/** {@link Product}에서 가격을 제외한 목록용 정보입니다. */
 export type ProductSummary = Pick<Product, "id" | "name">;
 
 /** {@link Product}의 식별자를 할당하기 전 생성 입력입니다. */
 export type CreateProductInput = Omit<Product, "id">;
 
 /**
- * 원본 {@link Product}를 변경하지 않고 {@link ProductSummary}를 만듭니다.
+ * 상품에서 목록에 공개할 정보를 선택합니다.
+ *
+ * @param product - 변경하지 않고 읽을 원본 상품
+ * @returns id와 name만 담은 새 {@link ProductSummary} 객체
  *
  * @example
  * ```ts
@@ -47,11 +46,19 @@ export function toProductSummary(product: Product): ProductSummary {
 }
 ````
 
-`Pick`·`Omit`은 타입만 파생하므로 반환할 필드를 제한하려면 위처럼 새 객체를 만듭니다. 내장 유틸리티로 표현할 수 있으면 별도 조건부·매핑 타입을 만들지 않습니다. [유틸리티 타입](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+| 재사용할 대상 | 예                                    |
+| ------------- | ------------------------------------- |
+| 함수 인자     | `Parameters<typeof toProductSummary>` |
+| 함수 결과     | `ReturnType<typeof toProductSummary>` |
 
-## 객체·키·반환값의 관계 → 제네릭
+- 실제 반환 필드도 제한하려면 예제처럼 새 객체를 만듭니다.
+- 내장 유틸리티를 우선하고, 반복되거나 의미 있는 조합에 타입 이름을 붙입니다.
 
-키가 객체에 존재하도록 제한하고, 선택한 속성의 타입을 그대로 반환합니다.
+근거: [유틸리티 타입](https://www.typescriptlang.org/docs/handbook/utility-types.html).
+
+## 제네릭
+
+객체·키·반환 타입의 관계를 보존할 때 사용합니다.
 
 ````ts
 // get-property.ts
@@ -59,8 +66,11 @@ export function toProductSummary(product: Product): ProductSummary {
 /**
  * 선택한 속성의 타입을 유지하며 값을 읽습니다.
  *
- * @typeParam T - 속성을 읽을 객체의 타입
- * @typeParam K - T에 존재하는 키. 반환 타입은 해당 속성의 타입으로 결정됩니다.
+ * @typeParam T - 속성을 읽을 대상의 타입
+ * @typeParam K - T에 존재하는 키
+ * @param value - 속성을 읽을 대상
+ * @param key - 선택할 속성 이름
+ * @returns 선택한 속성의 값. 타입은 T[K]를 유지하며 값을 복사하지 않습니다.
  *
  * @example
  * ```ts
@@ -77,4 +87,35 @@ export function getProperty<T, K extends keyof T>(value: T, key: K): T[K] {
 }
 ````
 
-존재하지 않는 키는 타입 오류가 되고, 반환 타입은 선택한 속성을 따릅니다. 관계를 보존할 필요가 없으면 `formatLabel(value: string): string`처럼 구체 타입을 사용합니다. 조건부·재귀 타입은 단순한 타입으로 표현할 수 없을 때 도입합니다. [제네릭 함수 작성 기준](https://www.typescriptlang.org/docs/handbook/2/functions.html#guidelines-for-writing-good-generic-functions)
+| 필요한 관계                | 선택                                 |
+| -------------------------- | ------------------------------------ |
+| 구체 타입으로 충분         | `formatLabel(value: string): string` |
+| 입력에 따라 반환 타입 결정 | 위의 `getProperty<T, K>`             |
+| 단순한 타입으로 표현 불가  | 조건부·재귀 타입 검토                |
+
+근거: [제네릭 함수 작성 기준](https://www.typescriptlang.org/docs/handbook/2/functions.html#guidelines-for-writing-good-generic-functions).
+
+## 타입 오류 검증
+
+허용할 호출과 거부할 호출을 함께 검사합니다. [제네릭 예제](#제네릭)의 `get-property.ts`와 아래 파일을 `typecheck`에 포함합니다. 아래는 실행 없이 타입만 검사하는 예제입니다.
+
+```ts
+// get-property.typecheck.ts
+import { getProperty } from "./get-property.ts";
+
+const product = { name: "머그컵", price: 1200 };
+
+getProperty(product, "price");
+
+// @ts-expect-error - 상품에 없는 stock 키는 허용하지 않습니다.
+getProperty(product, "stock");
+```
+
+`@ts-expect-error`는 다음 줄에 오류가 없으면 검사에 실패합니다. 용도에 맞는 근거를 주석에 적습니다.
+
+| 용도                          | 주석에 적을 내용   |
+| ----------------------------- | ------------------ |
+| 외부 선언 오류 임시 억제      | 이유·제거 조건     |
+| 잘못된 입력을 거부하는 테스트 | 기대하는 오류 이유 |
+
+근거: [타입 오류 억제](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html#ts-expect-error-comments).

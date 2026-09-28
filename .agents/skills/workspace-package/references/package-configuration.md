@@ -4,6 +4,8 @@
 
 루트의 공통 TypeScript 설정과 Vitest 프로젝트 수집을 사용하는 예제입니다. 워크스페이스에서 `@types/node`와 Vitest를 사용할 수 있어야 합니다.
 
+새 패키지의 기본 구성입니다. 기존 패키지에는 필요한 필드만 반영하고 스크립트·의존성·프레임워크 설정을 유지합니다.
+
 ```text
 tools/example/
 ├── package.json
