@@ -135,7 +135,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:17a821b05f80e73947b2862b8265613b891c5880d6ee972419956f7a6933b0b3
+  content_hash: sha256:527eabda5ebf8dbb73e8c24ef64033761c382d7c0e4b79be09039acc3554f042
 - kind: project-relative
   target: claude
   value: .claude/skills/testing/references/type-tests.md
@@ -369,7 +369,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:17a821b05f80e73947b2862b8265613b891c5880d6ee972419956f7a6933b0b3
+  content_hash: sha256:527eabda5ebf8dbb73e8c24ef64033761c382d7c0e4b79be09039acc3554f042
 - kind: project-relative
   target: legacy
   value: .agents/skills/testing/references/type-tests.md
@@ -533,7 +533,7 @@ local_deployed_file_hashes:
   .agents/skills/testing/SKILL.md: sha256:5c6b2b3469ddf8463394a22aaf85e7210c532d312d8639f3d966ead41850494f
   .agents/skills/testing/references/browser-tests.md: sha256:70956b4bb75e351e4526e023e1e611afdb697a2d422454b92610e4b885654959
   .agents/skills/testing/references/integration-tests.md: sha256:508d0da8e86ff20d852f3421487a020caf3c9294ecc96246c88216e8ff02518e
-  .agents/skills/testing/references/mocking.md: sha256:17a821b05f80e73947b2862b8265613b891c5880d6ee972419956f7a6933b0b3
+  .agents/skills/testing/references/mocking.md: sha256:527eabda5ebf8dbb73e8c24ef64033761c382d7c0e4b79be09039acc3554f042
   .agents/skills/testing/references/type-tests.md: sha256:5ffacd36a4a946b0ddfd0ee1faa3932707acebbb49dcd2b92d2cbe9318d7d299
   .agents/skills/testing/references/unit-tests.md: sha256:f5b1e891646cc3af7ed97f3b9adcae6fecd6a94061d96b39ad48bb05b3cb683f
   .agents/skills/typescript/SKILL.md: sha256:db7a76014215f60caa141ef75f6d6ff2d7a38e8bed0386025fa54bbb5e89b3c3
@@ -553,7 +553,7 @@ local_deployed_file_hashes:
   .claude/skills/testing/SKILL.md: sha256:5c6b2b3469ddf8463394a22aaf85e7210c532d312d8639f3d966ead41850494f
   .claude/skills/testing/references/browser-tests.md: sha256:70956b4bb75e351e4526e023e1e611afdb697a2d422454b92610e4b885654959
   .claude/skills/testing/references/integration-tests.md: sha256:508d0da8e86ff20d852f3421487a020caf3c9294ecc96246c88216e8ff02518e
-  .claude/skills/testing/references/mocking.md: sha256:17a821b05f80e73947b2862b8265613b891c5880d6ee972419956f7a6933b0b3
+  .claude/skills/testing/references/mocking.md: sha256:527eabda5ebf8dbb73e8c24ef64033761c382d7c0e4b79be09039acc3554f042
   .claude/skills/testing/references/type-tests.md: sha256:5ffacd36a4a946b0ddfd0ee1faa3932707acebbb49dcd2b92d2cbe9318d7d299
   .claude/skills/testing/references/unit-tests.md: sha256:f5b1e891646cc3af7ed97f3b9adcae6fecd6a94061d96b39ad48bb05b3cb683f
   .claude/skills/typescript/SKILL.md: sha256:db7a76014215f60caa141ef75f6d6ff2d7a38e8bed0386025fa54bbb5e89b3c3

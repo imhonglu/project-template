@@ -21,7 +21,7 @@ importers:
         specifier: ^26.6.3
         version: 26.6.3
       cspell:
-        specifier: 10.3.4
+        specifier: ^10.3.4
         version: 10.3.4
       husky:
         specifier: ^9.1.7

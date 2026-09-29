@@ -32,4 +32,8 @@ jobs:
         env:
           MISE_LOCKED: "1"
       - run: mise run setup
+
+      # 설치가 추적 파일을 바꾸면 스킬 생성물·잠금 파일이 원본과 맞지 않으므로 실패시킵니다.
+      # 참고: https://git-scm.com/docs/git-diff#Documentation/git-diff.txt---exit-code
+      - run: git diff --exit-code
       - run: pnpm check

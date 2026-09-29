@@ -6,7 +6,7 @@
 
 - 변경 전에 요청 범위·관련 파일·검증 방법을 확인합니다. 패키지 작업은 해당 README와 기존 코드를 먼저 읽습니다.
 - 현재 브랜치에서 요청 범위만 수정하고 사용자 변경을 보존합니다. 여러 단계가 필요한 작업은 검증 가능한 단위로 나눕니다.
-- 커밋·푸시·풀 리퀘스트는 사용자가 요청한 경우에만 수행합니다. 비밀정보와 로컬 환경 파일은 커밋하지 않습니다.
+- 커밋·푸시·풀 리퀘스트는 사용자가 요청한 경우에만 수행합니다. 비밀정보와 로컬 환경 파일은 커밋하지 않습니다. 풀 리퀘스트 본문은 [템플릿](.github/pull_request_template.md)의 항목을 채웁니다.
 - 잠금 파일과 생성물은 직접 편집하지 않습니다. 원본을 수정하고 해당 도구로 재생성합니다.
 
 ## 명령
@@ -27,19 +27,19 @@
 
 ## 저장소 구조
 
-| 경로                                 | 역할                                 |
-| ------------------------------------ | ------------------------------------ |
-| `apps/*`                             | 앱 패키지                            |
-| `libs/*`                             | 공유 라이브러리 패키지               |
-| `tools/*`                            | 개발 도구 패키지                     |
-| `.github/`                           | GitHub Actions 등 저장소 자동화 설정 |
-| `.husky/`                            | Git 훅 원본 (`_/`는 생성물)          |
-| `.vscode/`                           | VS Code 작업 영역 설정·권장 확장     |
-| `.apm/skills/`                       | 로컬 스킬 원본                       |
-| `.agents/skills/`, `.claude/skills/` | 스킬 생성물                          |
-| 루트 설정 파일                       | 도구·워크스페이스·공통 검사 설정     |
+| 경로                                 | 역할                              |
+| ------------------------------------ | --------------------------------- |
+| `apps/*`                             | 앱 패키지                         |
+| `libs/*`                             | 공유 라이브러리 패키지            |
+| `tools/*`                            | 개발 도구 패키지                  |
+| `.github/`                           | GitHub Actions·풀 리퀘스트 템플릿 |
+| `.husky/`                            | Git 훅 원본 (`_/`는 생성물)       |
+| `.vscode/`                           | VS Code 작업 영역 설정·권장 확장  |
+| `.apm/skills/`                       | 로컬 스킬 원본                    |
+| `.agents/skills/`, `.claude/skills/` | 스킬 생성물                       |
+| 루트 설정 파일                       | 도구·워크스페이스·공통 검사 설정  |
 
-패키지 검색 범위는 [pnpm-workspace.yaml](pnpm-workspace.yaml)을 따릅니다. 실행 환경·프레임워크·빌드·배포는 패키지별로 구성합니다.
+패키지 검색 범위는 [pnpm-workspace.yaml](pnpm-workspace.yaml)을 따르며, 경로를 바꾸면 [Vitest 설정](vitest.config.ts)의 `projects`와 위 표도 함께 수정합니다. 실행 환경·프레임워크·빌드·배포는 패키지별로 구성합니다.
 
 ## 작성 규칙
 
@@ -51,7 +51,7 @@
 
 ### 설정·문서
 
-타입 검사는 [tsconfig.base.json](tsconfig.base.json), 린트는 [.oxlintrc.jsonc](.oxlintrc.jsonc), 포맷은 [.oxfmtrc.jsonc](.oxfmtrc.jsonc)와 [.editorconfig](.editorconfig)를 따릅니다.
+타입 검사는 [tsconfig.base.json](tsconfig.base.json), 린트는 [.oxlintrc.jsonc](.oxlintrc.jsonc), 포맷은 [.oxfmtrc.jsonc](.oxfmtrc.jsonc)와 [.editorconfig](.editorconfig), 철자는 [cspell.config.jsonc](cspell.config.jsonc)를 따릅니다.
 
 미사용 파일·의존성·내보내기 검사는 [.knip.jsonc](.knip.jsonc)를 따릅니다.
 

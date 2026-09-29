@@ -9,9 +9,7 @@
   "enableGlobDot": true,
 
   // Git 메타데이터·pnpm 및 APM 잠금 파일·스킬 생성물을 검사 대상에서 제외합니다.
-  // 외부에서 가져온 find-skills 문서는 원본 문구를 보존합니다.
   "ignorePaths": [
-    ".apm/skills/find-skills/SKILL.md",
     ".git",
     "pnpm-lock.yaml",
     ".agents/skills/**",

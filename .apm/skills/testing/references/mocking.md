@@ -42,7 +42,7 @@ export async function getOrderLabel(id: string, loadOrder: OrderLoader): Promise
 ```
 
 ```ts
-// order-label.unit.test.ts
+// order-label.test.ts
 import { describe, expect, it, vi } from "vitest";
 
 import { getOrderLabel } from "./order-label.ts";
@@ -99,7 +99,7 @@ export async function loadWelcomeMessage(filePath: string): Promise<string> {
 ```
 
 ```ts
-// welcome-message.unit.test.ts
+// welcome-message.test.ts
 import { readFile } from "node:fs/promises";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -158,7 +158,7 @@ export function isExpired(expiresAt: number): boolean {
 ```
 
 ```ts
-// expiry.unit.test.ts
+// expiry.test.ts
 import { afterEach, expect, it, vi } from "vitest";
 
 import { isExpired } from "./expiry.ts";
