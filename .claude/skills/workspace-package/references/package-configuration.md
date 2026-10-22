@@ -44,8 +44,12 @@ packages/example/
 }
 ```
 
-위 예제는 공통 설정이 `noEmit`·`.ts` 확장자 import 허용을 제공하고 `files`·`include`·`exclude`를 제한하지 않는 구성입니다.
-공통 설정에 파일 탐색 범위가 있으면 상속되므로 실제 목록을 확인하고 패키지 범위로 재정의합니다.
+공통 설정의 전제:
+
+- `noEmit`·`.ts` 확장자 import 허용
+- `files`·`include`·`exclude` 미지정
+
+파일 탐색 범위를 상속받으면 실제 목록을 확인하고 패키지 범위로 재정의합니다.
 
 ```ts
 // vitest.config.ts
@@ -56,7 +60,7 @@ import { defineProject } from "vitest/config";
 export default defineProject({ test: {} });
 ```
 
-Vitest 프로젝트 이름은 루트 설정과 일치시킵니다. Node.js가 기본 실행 환경이며, 필요한 실행 설정은 해당 프로젝트에 추가합니다.
+프로젝트 이름은 루트 Vitest 설정과 맞춥니다. Node.js 외의 실행 환경은 해당 프로젝트에 지정합니다.
 
 공유 API는 [단일 배럴](entry-points.md#단일-배럴)을, CLI는 [실행 명령](entry-points.md#실행-명령)을 적용합니다.
 

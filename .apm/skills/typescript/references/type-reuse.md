@@ -67,12 +67,7 @@ export function toProductSummary(product: Product): ProductSummary {
 /**
  * 선택한 속성의 타입을 유지하며 값을 읽습니다.
  *
- * @typeParam T - 속성을 읽을 대상의 타입
- * @typeParam K - T에 존재하는 키
- * @param value - 속성을 읽을 대상
- * @param key - 선택할 속성 이름
- *
- * @returns 선택한 속성의 값. 타입은 T[K]를 유지하며 값을 복사하지 않습니다.
+ * @returns 선택한 속성의 값. 객체·배열도 복사하지 않습니다.
  *
  * @example
  * ```ts

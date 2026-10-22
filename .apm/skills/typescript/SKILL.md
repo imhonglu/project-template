@@ -34,8 +34,6 @@ export interface JoinLabelsOptions {
 /**
  * 목록 순서대로 문구를 이어 붙입니다.
  *
- * @param source - 순서를 유지하며 읽을 문구 목록
- *
  * @returns 합친 문구. 빈 목록이면 설정한 fallback을 반환합니다.
  *
  * @example
@@ -102,11 +100,11 @@ src/
 | 독립적으로 사용하는 함수·클래스·상수    | 각각의 소유 파일                        |
 | 여러 구현이 공유하는 타입 계약          | 소유 영역의 `types/` 등 기존 구조       |
 
-공개 배럴은 기본적으로 소비자용 모듈을 `export *`로, 타입만 제공할 때는 `export type *`로 재수출합니다.
+공개 배럴은 소비자용 모듈을 재수출합니다.
 
 - 타입 의존성은 `import type`·`export type`으로 표시합니다. default export는 도구가 요구할 때 사용합니다.
 - 설정·테스트 setup 진입점에는 도구가 요구하는 선언·등록만 둡니다.
-- 파일을 옮기면 TSDoc·테스트·호출부를 함께 갱신하고 공개 이름, 순환 의존성, 초기화 순서와 상태 수명을 확인합니다.
+- 파일을 옮기면 TSDoc·테스트·호출부를 함께 갱신합니다.
 
 ### 타입
 
@@ -145,14 +143,14 @@ src/
 공개 API·공유 도우미는 선언 바로 위에 TSDoc을 작성합니다.
 짧은 요약은 한 줄로 쓰고, 상세 설명·블록 태그·예제가 있으면 여러 줄로 나눕니다.
 
-| 위치                                                                                                  | 담을 정보                                 | 예제                                               |
-| ----------------------------------------------------------------------------------------------------- | ----------------------------------------- | -------------------------------------------------- |
-| 요약·[`@remarks`](https://tsdoc.org/pages/tags/remarks/)                                              | 목적, 상세 동작·부수 효과                 | [입력 검증](references/type-patterns.md#외부-입력) |
-| 옵션 속성·[`@defaultValue`](https://tsdoc.org/pages/tags/defaultvalue/)                               | 허용 범위·생략 의미·기본값                | 위 `JoinLabelsOptions`                             |
-| `@typeParam`·[`@param`](https://tsdoc.org/pages/tags/param/)                                          | 타입 관계·입력 제약; 함수 인자의 기본값   | [제네릭](references/type-reuse.md#제네릭)          |
-| [`@returns`](https://tsdoc.org/pages/tags/returns/)·[`@throws`](https://tsdoc.org/pages/tags/throws/) | 반환값·실패 값·완료 시점 / 예외·거부 조건 | [비동기 예제](references/async-patterns.md)        |
-| [`@example`](https://tsdoc.org/pages/tags/example/)                                                   | 준비·호출·결과                            | 위 `joinLabels`                                    |
-| [`{@link}`](https://tsdoc.org/pages/tags/link/)·[`@see`](https://tsdoc.org/pages/tags/see/)           | 관련 선언·외부 자료                       | 옵션·결과 타입, 공식 API 문서                      |
+| 위치                                                                                                  | 담을 정보                                 | 예제                                                                           |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------ |
+| 요약·[`@remarks`](https://tsdoc.org/pages/tags/remarks/)                                              | 목적, 상세 동작·부수 효과                 | [입력 검증](references/type-patterns.md#외부-입력)                             |
+| 옵션 속성·[`@defaultValue`](https://tsdoc.org/pages/tags/defaultvalue/)                               | 허용 범위·생략 의미·기본값                | 위 `JoinLabelsOptions`                                                         |
+| `@typeParam`·[`@param`](https://tsdoc.org/pages/tags/param/)                                          | 타입 관계·입력 제약; 함수 인자의 기본값   | [재시도 입력](references/implementation-design.md#호출부에서-구분해야-할-의미) |
+| [`@returns`](https://tsdoc.org/pages/tags/returns/)·[`@throws`](https://tsdoc.org/pages/tags/throws/) | 반환값·실패 값·완료 시점 / 예외·거부 조건 | [비동기 예제](references/async-patterns.md)                                    |
+| [`@example`](https://tsdoc.org/pages/tags/example/)                                                   | 준비·호출·결과                            | 위 `joinLabels`                                                                |
+| [`{@link}`](https://tsdoc.org/pages/tags/link/)·[`@see`](https://tsdoc.org/pages/tags/see/)           | 관련 선언·외부 자료                       | 옵션·결과 타입, 공식 API 문서                                                  |
 
 표 순서로 필요한 그룹만 사용합니다. 그룹 사이와 각 `@example` 앞에 빈 주석 줄을 두고, 블록 태그는 새 줄에서 시작합니다.
 클래스의 전체 사용 흐름은 [클래스 주석](references/implementation-design.md#인스턴스가-상태를-소유하는-예)에, 개별 계약은 생성자·메서드에 둡니다.
@@ -162,7 +160,6 @@ src/
 #### 참조 문법
 
 TSDoc에서는 선언·외부 URL을 `{@link 대상 | 표시 이름}`으로 연결하고, 별도 참고 항목은 `@see`에 둡니다.
-Markdown 문서의 `참고:` 형식은 API 주석에 적용하지 않습니다.
 
 아래는 위 `joinLabels` 주석에서 참조를 표기하는 예입니다.
 
@@ -176,9 +173,16 @@ Markdown 문서의 `참고:` 형식은 API 주석에 적용하지 않습니다.
 
 ## 결과 확인
 
-1. 공개 API·호출부·TSDoc을 대조합니다. 배럴은 공개 이름·타입·초기화·내부 선언 노출을, 제네릭은 결과·추론·입력 거부를 검사합니다.
-2. 표시된 파일명·대상 환경에서 예제를 타입 검사합니다. 실행 예제는 동작도 확인하고, 검증 후 임시 파일을 제거합니다.
-3. 프로젝트의 `check`를 실행하고 결과·미실행 범위를 보고합니다. 포함된 단계는 중복 실행하지 않습니다.
+공개 API·호출부·TSDoc을 대조하고 변경한 경계를 검사합니다.
+
+| 변경      | 확인할 내용                                 |
+| --------- | ------------------------------------------- |
+| 배럴      | 공개 이름·타입·초기화 동작과 내부 선언 노출 |
+| 파일 이동 | 순환 의존성·초기화 순서·상태 수명           |
+| 제네릭    | 결과·추론 타입·잘못된 입력 거부             |
+
+표시된 파일명·대상 환경에서 예제를 타입 검사하고, 실행 예제는 동작도 확인합니다. 검증 후 임시 파일을 제거합니다.
+프로젝트의 `check`를 실행하고 결과·미실행 범위를 보고합니다. 포함된 단계는 중복 실행하지 않습니다.
 
 ## 참고
 
