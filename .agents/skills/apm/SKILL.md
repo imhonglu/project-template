@@ -101,19 +101,19 @@ Codex의 프로젝트 설정에는 `.codex/` 디렉터리가 필요합니다.
 
 예시의 이름·경로·주소는 서버에 맞춥니다. 인증은 환경 변수 참조나 도구의 인증 절차로 처리하고 비밀값은 기록하지 않습니다.
 
-**레지스트리**
+### 레지스트리
 
 ```sh
 mise exec -- apm install --mcp "<registry-name>"
 ```
 
-**로컬 실행 (stdio)**
+### 로컬 실행 (stdio)
 
 ```sh
 mise exec -- apm install --mcp example -- node /absolute/path/server.js
 ```
 
-**원격 서버 (HTTP)**
+### 원격 서버 (HTTP)
 
 ```sh
 mise exec -- apm install --mcp example --transport http --url https://example.com/mcp

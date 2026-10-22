@@ -31,7 +31,6 @@ export interface WriteOptions {
  * 연결 하나에 메시지를 순서대로 기록합니다.
  *
  * @remarks 호출자가 각 호출의 완료를 기다린 뒤 다음 메시지를 보내야 합니다.
- * 구현이 동시 호출을 직렬화한다고 가정하지 않습니다.
  */
 export interface MessageWriter {
   /**
