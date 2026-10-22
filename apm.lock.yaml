@@ -90,7 +90,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:d623cc49acf8b2c651582f15f0e52d202a74ff822ceddf6cda3ae687d9c0a7bc
+  content_hash: sha256:e3987b832dac15f36503e84fef81f26812533440aae82789b52f6372a219c8f1
 - kind: project-relative
   target: claude
   value: .claude/skills/testing
@@ -351,7 +351,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:d623cc49acf8b2c651582f15f0e52d202a74ff822ceddf6cda3ae687d9c0a7bc
+  content_hash: sha256:e3987b832dac15f36503e84fef81f26812533440aae82789b52f6372a219c8f1
 - kind: project-relative
   target: codex
   value: .agents/skills/testing
@@ -589,7 +589,7 @@ local_deployed_file_hashes:
   .agents/skills/documentation/SKILL.md: sha256:d831dddf9b2f27b26237a9a715ab9eee2c4cea59b80b52be8c32963c1ede66ce
   .agents/skills/documentation/references/api-contracts.md: sha256:d6aef5bf97e4a42a57cfa0ee24146b0194466f1d7c1a38e4ac609ea967d0eabd
   .agents/skills/documentation/references/readme.md: sha256:265a92864308169ba1ccbb1a4b9bc79859173c53769b40a2f94e3882719a9570
-  .agents/skills/git-commit/SKILL.md: sha256:d623cc49acf8b2c651582f15f0e52d202a74ff822ceddf6cda3ae687d9c0a7bc
+  .agents/skills/git-commit/SKILL.md: sha256:e3987b832dac15f36503e84fef81f26812533440aae82789b52f6372a219c8f1
   .agents/skills/testing/SKILL.md: sha256:ce0fdf6582fa63a3822a5c8d9667a19a9ce9fbe83caf03b86b8129b7ceb1642a
   .agents/skills/testing/references/browser-tests.md: sha256:f17c02d338b552738f4ea2dc259da95f8766f4dc3c8b060491f7da68a6e8b705
   .agents/skills/testing/references/integration-tests.md: sha256:05ac3aa4c8f654c9a03f40431b726f11a0f8be40f2bacf8b5bd5b144c009458f
@@ -612,7 +612,7 @@ local_deployed_file_hashes:
   .claude/skills/documentation/SKILL.md: sha256:d831dddf9b2f27b26237a9a715ab9eee2c4cea59b80b52be8c32963c1ede66ce
   .claude/skills/documentation/references/api-contracts.md: sha256:d6aef5bf97e4a42a57cfa0ee24146b0194466f1d7c1a38e4ac609ea967d0eabd
   .claude/skills/documentation/references/readme.md: sha256:265a92864308169ba1ccbb1a4b9bc79859173c53769b40a2f94e3882719a9570
-  .claude/skills/git-commit/SKILL.md: sha256:d623cc49acf8b2c651582f15f0e52d202a74ff822ceddf6cda3ae687d9c0a7bc
+  .claude/skills/git-commit/SKILL.md: sha256:e3987b832dac15f36503e84fef81f26812533440aae82789b52f6372a219c8f1
   .claude/skills/testing/SKILL.md: sha256:ce0fdf6582fa63a3822a5c8d9667a19a9ce9fbe83caf03b86b8129b7ceb1642a
   .claude/skills/testing/references/browser-tests.md: sha256:f17c02d338b552738f4ea2dc259da95f8766f4dc3c8b060491f7da68a6e8b705
   .claude/skills/testing/references/integration-tests.md: sha256:05ac3aa4c8f654c9a03f40431b726f11a0f8be40f2bacf8b5bd5b144c009458f
