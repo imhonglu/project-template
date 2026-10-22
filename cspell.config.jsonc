@@ -21,5 +21,5 @@
   "dictionaries": ["npm"],
 
   // 개발 도구의 고유 이름·식별자 중 사전에 없는 단어만 허용합니다.
-  "words": ["lintignore", "tsgolint", "typescriptteam", "unstub"],
+  "words": ["lintignore", "llms", "tsgolint", "typescriptteam", "unstub"],
 }

@@ -1,17 +1,14 @@
 # 모킹
 
+대체할 경계에 따라 [함수 주입](#타입이-있는-외부-의존성), [응답 순서](#응답-완료-순서-제어), [모듈 모킹](#import한-외부-모듈-대체), [시간 제어](#시간-경계와-복구)를 선택합니다.
+
 ## 타입이 있는 외부 의존성
 
 주문 조회 함수를 대체해 조회 결과별 화면 문구와 오류 전달을 검증합니다. 실제 DB 동작은 통합 테스트에서 확인합니다.
 
 ```ts
-// order-label.ts
+// get-order-label.ts
 
-/**
- * 조회한 주문의 식별자와 합계입니다.
- *
- * @see {@link OrderLoader} - 주문 조회 계약
- */
 export interface Order {
   id: string;
 
@@ -19,11 +16,7 @@ export interface Order {
   total: number;
 }
 
-/**
- * {@link Order} 또는 undefined로 이행하고, 조회 실패 시 거부하는 함수입니다.
- *
- * @see {@link getOrderLabel} - 조회 결과를 화면 문구로 변환
- */
+/** 주문이 없으면 undefined로 이행하고, 조회 실패 시 거부합니다. */
 export type OrderLoader = (id: string) => Promise<Order | undefined>;
 
 /**
@@ -31,6 +24,7 @@ export type OrderLoader = (id: string) => Promise<Order | undefined>;
  *
  * @param id - 조회할 주문 식별자
  * @param loadOrder - 주문 조회 함수
+ *
  * @returns 주문이 있으면 표시 문구, 없으면 "주문 없음"으로 이행되는 Promise
  * @throws 조회 실패 시 원본 오류로 Promise를 거부합니다.
  */
@@ -42,15 +36,15 @@ export async function getOrderLabel(id: string, loadOrder: OrderLoader): Promise
 ```
 
 ```ts
-// order-label.test.ts
+// get-order-label.test.ts
 import { describe, expect, it, vi } from "vitest";
 
-import { getOrderLabel } from "./order-label.ts";
-import type { Order, OrderLoader } from "./order-label.ts";
+import { getOrderLabel } from "./get-order-label.ts";
+import type { Order, OrderLoader } from "./get-order-label.ts";
 
 describe("getOrderLabel", () => {
   it("주문이 있으면 해당 주문의 합계를 표시합니다", async () => {
-    const order: Order = { id: "order-1", total: 3600 };
+    const order: Order = { id: "order-1", total: 3_600 };
     const loadOrder = vi.fn<OrderLoader>().mockResolvedValue(order);
 
     const label = await getOrderLabel("order-1", loadOrder);
@@ -74,21 +68,61 @@ describe("getOrderLabel", () => {
 });
 ```
 
-- 테스트마다 `vi.fn<OrderLoader>()`를 새로 만들어 호출 이력과 구현을 격리합니다.
-- 호출 인수 단언은 조회할 주문 ID가 외부 의존성에 전달되는지 확인합니다. 내부 함수의 호출 순서는 검증하지 않습니다.
+## 응답 완료 순서 제어
+
+`Promise.withResolvers`를 지원하는 환경에서 위 `get-order-label.ts`를 사용합니다.
+첫 조회를 보류한 채 두 번째 조회를 완료해, 응답 순서가 바뀌어도 각 결과가 해당 주문의 문구인지 확인합니다.
+
+```ts
+// get-order-label-order.test.ts
+import { expect, it, vi } from "vitest";
+
+import { getOrderLabel } from "./get-order-label.ts";
+import type { Order, OrderLoader } from "./get-order-label.ts";
+
+it("두 번째 조회가 먼저 끝나도 각 주문의 문구를 반환합니다", async ({ onTestFinished }) => {
+  const firstResponse = Promise.withResolvers<Order | undefined>();
+  const loadOrder = vi
+    .fn<OrderLoader>()
+    .mockReturnValueOnce(firstResponse.promise)
+    .mockResolvedValueOnce({ id: "order-2", total: 7_200 });
+
+  const firstLabel = getOrderLabel("order-1", loadOrder);
+  onTestFinished(async () => {
+    // 단언 실패로 첫 응답을 전달하지 못해도 대기 중인 조회를 끝냅니다.
+    firstResponse.resolve(undefined);
+    await firstLabel;
+  });
+
+  const secondLabel = await getOrderLabel("order-2", loadOrder);
+
+  expect(secondLabel).toBe("order-2: 7200원");
+
+  firstResponse.resolve({ id: "order-1", total: 3_600 });
+
+  await expect(firstLabel).resolves.toBe("order-1: 3600원");
+});
+```
+
+### 참고
+
+- [Promise의 완료 시점 제어](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/withResolvers)
+- [테스트 종료 시 정리](https://vitest.dev/api/hooks.html#ontestfinished)
 
 ## import한 외부 모듈 대체
 
 Node.js의 파일 읽기를 모킹해 문구 정리와 오류 전달을 검증합니다. 실제 파일 저장·조회 검증에는 이 모킹을 적용하지 않습니다.
 
 ```ts
-// welcome-message.ts
+// load-welcome-message.ts
 import { readFile } from "node:fs/promises";
 
 /**
  * UTF-8 파일에서 읽은 환영 문구의 앞뒤 공백을 제거합니다.
  *
- * @returns 공백을 정리한 문구로 이행되는 Promise
+ * @param filePath - 읽을 파일 경로. 상대 경로는 현재 작업 디렉터리 기준입니다.
+ *
+ * @returns 공백을 정리한 문구로 이행되는 Promise. 공백뿐이면 빈 문자열입니다.
  * @throws 파일 읽기 실패 시 원본 오류로 Promise를 거부합니다.
  */
 export async function loadWelcomeMessage(filePath: string): Promise<string> {
@@ -99,12 +133,12 @@ export async function loadWelcomeMessage(filePath: string): Promise<string> {
 ```
 
 ```ts
-// welcome-message.test.ts
+// load-welcome-message.test.ts
 import { readFile } from "node:fs/promises";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { loadWelcomeMessage } from "./welcome-message.ts";
+import { loadWelcomeMessage } from "./load-welcome-message.ts";
 
 vi.mock(import("node:fs/promises"));
 
@@ -112,6 +146,10 @@ const readFileMock = vi.mocked(readFile);
 
 beforeEach(() => {
   readFileMock.mockReset();
+
+  return () => {
+    readFileMock.mockReset();
+  };
 });
 
 describe("loadWelcomeMessage", () => {
@@ -133,23 +171,41 @@ describe("loadWelcomeMessage", () => {
 });
 ```
 
-- `vi.mock(import(...))`는 모듈의 함수를 자동으로 모킹합니다. `vi.mocked`는 모킹 타입을 제공하는 도우미이며, 자체적으로 모킹을 생성하지 않습니다.
-- 공유한 모킹은 `mockReset()` 후 테스트별 반환값을 지정합니다.
-- `vi.mock` 호출은 import보다 먼저 처리됩니다. 직접 팩터리를 작성하고 외부 변수를 공유해야 할 때는 `vi.hoisted`를 사용합니다.
-- 같은 파일 안에서 직접 참조하는 함수 호출은 외부의 `vi.spyOn`·모듈 모킹으로 바뀌지 않습니다. 공개 동작을 검증하고, 의존성 대체가 필요하면 실제 모듈 경계나 주입 지점을 사용합니다.
+- `vi.mock(import(...))`는 모듈 함수를 모킹하고, `vi.mocked`는 타입만 제공합니다.
+- `vi.mock` 호출은 import보다 먼저 처리됩니다. 직접 팩토리를 작성하고 외부 변수를 공유해야 할 때는 `vi.hoisted`를 사용합니다.
+- 외부의 모듈 모킹·`vi.spyOn`은 같은 파일 내부의 직접 호출을 바꾸지 못합니다. 의존성 대체는 모듈 경계나 주입 지점에서 수행합니다.
 - 브라우저의 네이티브 ESM export를 추적할 때는 직접 `spyOn`하는 대신 `vi.mock(import(...), { spy: true })`를 사용합니다.
+
+## 공유 모킹의 등록과 초기화
+
+여러 파일에서 같은 의존성의 준비가 반복되면 등록과 사례별 초기화를 구분합니다.
+
+| 처리                                   | 위치·시점                                                                                      |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `vi.mock`·`vi.hoisted` 선언            | 테스트 파일; 부분 대체는 `importOriginal`로 나머지 export 보존                                 |
+| 반환값 생성·호출 기록 초기화·출력 수집 | 공통 도우미; 자신이 소유한 모킹만 처리                                                         |
+| 준비 훅 등록                           | 파일 또는 suite 선언 시 한 번                                                                  |
+| 성공·실패 응답 설정                    | 각 테스트; 공통 초기화 뒤에 실행                                                               |
+| 모킹 복구                              | [정리 순서](integration-tests.md#정리-순서와-완료)에 따라 해당 모킹을 쓰는 마지막 정리 작업 뒤 |
+
+같은 모듈의 부분 모킹은 하나의 팩토리로 구성합니다. 별도 선언은 자동 병합되지 않습니다.
+공유 모킹을 바꾸는 사례는 순차 실행하고 입력·출력 상태를 사례별로 만듭니다.
+
+`setupFiles`의 선행 import는 모듈을 캐시해 테스트의 모킹 적용을 막을 수 있습니다.
+등록을 도우미로 옮길 때는 구현을 먼저 import하는 사례도 검증합니다.
+
+참고: [Vitest 모킹의 변환·캐시 제약](https://vitest.dev/api/vi.html#vi-mock)
 
 ## 시간 경계와 복구
 
-현재 시각을 고정해 만료 직전·도달 시점을 검증하고, 테스트가 끝나면 실제 시계로 복구합니다.
-
 ```ts
-// expiry.ts
+// is-expired.ts
 
 /**
  * 현재 시각이 만료 시각에 도달했는지 확인합니다.
  *
  * @param expiresAt - Unix epoch 기준 밀리초 단위의 만료 시각
+ *
  * @returns 만료 시각과 같거나 지났으면 true
  */
 export function isExpired(expiresAt: number): boolean {
@@ -158,28 +214,31 @@ export function isExpired(expiresAt: number): boolean {
 ```
 
 ```ts
-// expiry.test.ts
+// is-expired.test.ts
 import { afterEach, expect, it, vi } from "vitest";
 
-import { isExpired } from "./expiry.ts";
+import { isExpired } from "./is-expired.ts";
 
 afterEach(() => {
   vi.useRealTimers();
 });
 
-it("만료 시각부터 만료로 판단합니다", () => {
-  vi.useFakeTimers();
+it.each([
+  { name: "만료 직전", offsetMs: -1, expected: false },
+  { name: "만료 시각", offsetMs: 0, expected: true },
+  { name: "만료 직후", offsetMs: 1, expected: true },
+])("$name이면 만료 여부는 $expected입니다", ({ offsetMs, expected }) => {
   const expiresAt = Date.UTC(2030, 0, 1);
+  vi.useFakeTimers();
+  vi.setSystemTime(expiresAt + offsetMs);
 
-  vi.setSystemTime(expiresAt - 1);
-  expect(isExpired(expiresAt)).toBe(false);
+  const expired = isExpired(expiresAt);
 
-  vi.setSystemTime(expiresAt);
-  expect(isExpired(expiresAt)).toBe(true);
+  expect(expired).toBe(expected);
 });
 ```
 
-`vi.setSystemTime`은 시각만 바꾸고 타이머 콜백을 실행하지 않습니다. 지연·재시도 로직은 가짜 시계에서 `await vi.advanceTimersByTimeAsync(ms)`로 진행한 뒤 결과를 단언합니다. [타이머 진행](https://vitest.dev/api/vi.html#vi-advancetimersbytimeasync)
+`vi.setSystemTime`은 시각만 바꿉니다. 타이머 콜백까지 실행하려면 [`await vi.advanceTimersByTimeAsync(ms)`](https://vitest.dev/api/vi.html#vi-advancetimersbytimeasync)로 진행합니다.
 
 ## 변경한 항목 복구
 
@@ -191,6 +250,7 @@ it("만료 시각부터 만료로 판단합니다", () => {
 | 가짜 시계                    | `vi.useRealTimers()`                            |
 | `vi.stubGlobal`·`vi.stubEnv` | `vi.unstubAllGlobals()`·`vi.unstubAllEnvs()`    |
 
-`vi.restoreAllMocks()`는 모든 모킹·호출 이력을 초기화하는 명령이 아닙니다.
+## 참고
 
-참고: [Vitest 모듈 모킹](https://vitest.dev/guide/mocking/modules)·[vi 유틸리티](https://vitest.dev/api/vi).
+- [Vitest 모듈 모킹](https://vitest.dev/guide/mocking/modules)
+- [vi 유틸리티](https://vitest.dev/api/vi)

@@ -5,7 +5,7 @@
 원본과 함께 바뀌는 계약에 `Pick`·`Omit`을 사용합니다. 독립적인 계약은 별도로 정의합니다.
 
 ````ts
-// product.ts
+// to-product-summary.ts
 
 /**
  * 상품 목록과 생성 입력에서 공유하는 정보입니다.
@@ -19,26 +19,27 @@ export interface Product {
   price: number;
 }
 
-/** {@link Product}에서 가격을 제외한 목록용 정보입니다. */
 export type ProductSummary = Pick<Product, "id" | "name">;
 
-/** {@link Product}의 식별자를 할당하기 전 생성 입력입니다. */
 export type CreateProductInput = Omit<Product, "id">;
 
 /**
  * 상품에서 목록에 공개할 정보를 선택합니다.
  *
  * @param product - 변경하지 않고 읽을 원본 상품
+ *
  * @returns id와 name만 담은 새 {@link ProductSummary} 객체
  *
  * @example
  * ```ts
- * import { toProductSummary } from "./product.ts";
+ * import { toProductSummary } from "./to-product-summary.ts";
  *
- * const product = { id: "p1", name: "머그컵", price: 1200 };
+ * const product = { id: "p1", name: "머그컵", price: 1_200 };
  *
- * console.log(toProductSummary(product)); // { id: "p1", name: "머그컵" }
- * console.log(product.price); // 1200
+ * const summary = toProductSummary(product);
+ *
+ * console.log(summary); // { id: "p1", name: "머그컵" }
+ * console.log(product); // { id: "p1", name: "머그컵", price: 1200 }
  * ```
  */
 export function toProductSummary(product: Product): ProductSummary {
@@ -54,7 +55,7 @@ export function toProductSummary(product: Product): ProductSummary {
 - 실제 반환 필드도 제한하려면 예제처럼 새 객체를 만듭니다.
 - 내장 유틸리티를 우선하고, 반복되거나 의미 있는 조합에 타입 이름을 붙입니다.
 
-근거: [유틸리티 타입](https://www.typescriptlang.org/docs/handbook/utility-types.html).
+참고: [유틸리티 타입](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
 ## 제네릭
 
@@ -70,13 +71,15 @@ export function toProductSummary(product: Product): ProductSummary {
  * @typeParam K - T에 존재하는 키
  * @param value - 속성을 읽을 대상
  * @param key - 선택할 속성 이름
+ *
  * @returns 선택한 속성의 값. 타입은 T[K]를 유지하며 값을 복사하지 않습니다.
  *
  * @example
  * ```ts
  * import { getProperty } from "./get-property.ts";
  *
- * const product = { name: "머그컵", price: 1200 };
+ * const product = { name: "머그컵", price: 1_200 };
+ *
  * const price = getProperty(product, "price"); // number로 추론
  *
  * console.log(price.toFixed(2)); // "1200.00"
@@ -93,17 +96,17 @@ export function getProperty<T, K extends keyof T>(value: T, key: K): T[K] {
 | 입력에 따라 반환 타입 결정 | 위의 `getProperty<T, K>`             |
 | 단순한 타입으로 표현 불가  | 조건부·재귀 타입 검토                |
 
-근거: [제네릭 함수 작성 기준](https://www.typescriptlang.org/docs/handbook/2/functions.html#guidelines-for-writing-good-generic-functions).
+참고: [제네릭 함수 작성 기준](https://www.typescriptlang.org/docs/handbook/2/functions.html#guidelines-for-writing-good-generic-functions)
 
 ## 타입 오류 검증
 
-허용할 호출과 거부할 호출을 함께 검사합니다. [제네릭 예제](#제네릭)의 `get-property.ts`와 아래 파일을 `typecheck`에 포함합니다. 아래는 실행 없이 타입만 검사하는 예제입니다.
+[제네릭 예제](#제네릭)의 `get-property.ts`와 아래 파일을 `typecheck`에 포함합니다. 실행 없이 허용·거부할 호출을 검사합니다.
 
 ```ts
 // get-property.typecheck.ts
 import { getProperty } from "./get-property.ts";
 
-const product = { name: "머그컵", price: 1200 };
+const product = { name: "머그컵", price: 1_200 };
 
 getProperty(product, "price");
 
@@ -111,11 +114,11 @@ getProperty(product, "price");
 getProperty(product, "stock");
 ```
 
-`@ts-expect-error`는 다음 줄에 오류가 없으면 검사에 실패합니다. 용도에 맞는 근거를 주석에 적습니다.
+`@ts-expect-error`는 다음 줄에 오류가 없으면 검사에 실패합니다.
 
 | 용도                          | 주석에 적을 내용   |
 | ----------------------------- | ------------------ |
 | 외부 선언 오류 임시 억제      | 이유·제거 조건     |
 | 잘못된 입력을 거부하는 테스트 | 기대하는 오류 이유 |
 
-근거: [타입 오류 억제](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html#ts-expect-error-comments).
+참고: [타입 오류 억제](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html#ts-expect-error-comments)

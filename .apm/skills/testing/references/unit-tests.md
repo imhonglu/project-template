@@ -1,20 +1,18 @@
 # 유닛 테스트
 
-계산·분기의 정상·경계·실패 사례를 검증하는 예제입니다. 무료 배송 기준 전후의 금액과 유효하지 않은 입력을 사용합니다.
+배송비 계산의 정상·경계·실패 사례입니다. 구현과 테스트를 같은 디렉터리에 둡니다.
 
 ```ts
-// shipping-fee.ts
+// get-shipping-fee.ts
 
-/** 무료 배송을 적용할 최소 주문 금액(원). */
 const FREE_SHIPPING_THRESHOLD = 30_000;
-
-/** 무료 배송 기준 미만일 때의 배송비(원). */
 const STANDARD_SHIPPING_FEE = 3_000;
 
 /**
  * 주문 금액에 따른 배송비를 원 단위로 계산합니다.
  *
  * @param orderTotal - 0 이상의 유한한 주문 금액(원)
+ *
  * @returns 30,000원 이상이면 0원, 미만이면 3,000원
  * @throws RangeError - 주문 금액이 음수이거나 유한한 수가 아닌 경우
  */
@@ -28,10 +26,10 @@ export function getShippingFee(orderTotal: number): number {
 ```
 
 ```ts
-// shipping-fee.test.ts
+// get-shipping-fee.test.ts
 import { describe, expect, it } from "vitest";
 
-import { getShippingFee } from "./shipping-fee.ts";
+import { getShippingFee } from "./get-shipping-fee.ts";
 
 describe("getShippingFee", () => {
   it.each([
@@ -51,6 +49,9 @@ describe("getShippingFee", () => {
 });
 ```
 
-기대값은 계산식을 반복하지 않고 고정값으로 작성합니다. 실패 사례도 `number` 안에서 선택해 `as any` 없이 검증합니다.
+음수·`NaN`·`Infinity`도 `number` 입력이므로 타입을 우회하지 않고 오류 경로를 검증합니다.
 
-참고: [it.each](https://vitest.dev/api/test#test-each)·[toThrow](https://vitest.dev/api/expect#tothrow).
+## 참고
+
+- [it.each](https://vitest.dev/api/test#test-each)
+- [toThrow](https://vitest.dev/api/expect#tothrow)

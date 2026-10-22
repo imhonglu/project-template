@@ -1,30 +1,49 @@
 # 통합 테스트
 
+| 확인할 내용         | 예제·기준                                                    |
+| ------------------- | ------------------------------------------------------------ |
+| 파일 저장·조회      | [메모 저장 후 다시 읽기](#실제-파일에-저장한-메모-다시-읽기) |
+| 공통 준비·자원 정리 | [수명과 훅 선택](#수명과-훅-선택)                            |
+| DB·HTTP 검증        | [다른 자원에 적용](#다른-자원에-적용)                        |
+| 배포물·원격 호환성  | [실제 환경과 배포물](#실제-환경과-배포물)                    |
+
 ## 실제 파일에 저장한 메모 다시 읽기
 
-`mkdtempDisposable`·`await using`을 지원하는 Node.js 환경의 예제입니다. 입력별 테스트를 동시에 실행하며 각각 새 임시 디렉터리에서 실제 파일 I/O를 검증합니다.
+`mkdtempDisposable`·`await using`을 지원하는 Node.js 환경에서 실행합니다.
 
 ```ts
-// note-store.ts
-import { readFile, writeFile } from "node:fs/promises";
+// save-note.ts
+import { writeFile } from "node:fs/promises";
 
 /**
  * 앞뒤 공백을 제거한 메모로 UTF-8 파일을 덮어씁니다.
  *
+ * @remarks
+ * 파일이 없으면 생성하지만 상위 디렉터리는 만들지 않습니다.
+ * 쓰기 실패 시 기존 내용 복구를 보장하지 않습니다.
+ *
+ * @param filePath - 저장할 파일 경로. 상대 경로는 현재 작업 디렉터리 기준입니다.
+ * @param content - 저장할 메모. 공백뿐이면 빈 파일로 저장합니다.
+ *
  * @returns 파일 쓰기가 완료되면 이행되는 Promise
  * @throws 파일 쓰기 실패 시 해당 오류로 Promise를 거부합니다.
- * @see {@link readNote} - 저장한 메모 다시 읽기
  */
 export function saveNote(filePath: string, content: string): Promise<void> {
   return writeFile(filePath, content.trim(), "utf8");
 }
+```
+
+```ts
+// read-note.ts
+import { readFile } from "node:fs/promises";
 
 /**
  * UTF-8 파일에 저장된 메모를 그대로 읽습니다.
  *
+ * @param filePath - 읽을 파일 경로. 상대 경로는 현재 작업 디렉터리 기준입니다.
+ *
  * @returns 파일 내용으로 이행되는 Promise
  * @throws 파일 읽기 실패 시 해당 오류로 Promise를 거부합니다.
- * @see {@link saveNote} - 메모 정리와 저장
  */
 export function readNote(filePath: string): Promise<string> {
   return readFile(filePath, "utf8");
@@ -32,14 +51,15 @@ export function readNote(filePath: string): Promise<string> {
 ```
 
 ```ts
-// note-store.integration.test.ts
+// save-note.integration.test.ts
 import { mkdtempDisposable } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { it } from "vitest";
 
-import { readNote, saveNote } from "./note-store.ts";
+import { readNote } from "./read-note.ts";
+import { saveNote } from "./save-note.ts";
 
 it.concurrent.for([
   {
@@ -63,20 +83,108 @@ it.concurrent.for([
 });
 ```
 
-`it.for`는 입력과 테스트 컨텍스트를 각각 전달합니다. 두 번째 인수의 `{ expect }`로 현재 테스트에 연결된 단언을 사용합니다. [매개변수화 테스트](https://vitest.dev/api/test#test-for)
+`await using`은 정상 완료·예외 발생 시 모두 디렉터리와 내용의 삭제를 기다립니다.
 
-`await using`은 테스트 콜백이 정상 종료되거나 예외로 끝나도 디렉터리와 내용을 삭제합니다. [Node.js 임시 디렉터리 정리](https://nodejs.org/api/fs.html#fspromisesmkdtempdisposableprefix-options)
+### 참고
+
+- [Vitest의 입력별 테스트와 컨텍스트](https://vitest.dev/api/test#test-for)
+- [Node.js 임시 디렉터리 정리](https://nodejs.org/api/fs.html#fspromisesmkdtempdisposableprefix-options)
+
+## 수명과 훅 선택
+
+| 사용 조건                                                            | 기본 선택                                                             |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| 테스트 본문에서 사용을 마치는 `Disposable`·`AsyncDisposable`         | `using`·`await using` 그대로 사용                                     |
+| 준비 훅에서 만든 자원을 테스트까지 유지하거나 `afterEach`에서도 사용 | 획득 직후 현재 컨텍스트의 `onTestFinished`에 정리 등록                |
+| DOM 제거·보류 Promise 해제처럼 별도의 정리 함수가 필요               | `onTestFinished`에 정리 함수 등록                                     |
+| 모든 사례에 공통으로 필요한 상태 복구                                | `afterEach`                                                           |
+| suite 전체에서 같은 인스턴스를 사용                                  | 격리를 보장할 수 있을 때 `beforeAll` + 반환 정리 함수 또는 `afterAll` |
+
+`beforeEach` 안의 `await using`은 준비 훅이 끝날 때 정리되므로 테스트 본문까지 자원을 유지하지 못합니다.
+
+### 준비 훅에서 만든 자원 유지
+
+위 `save-note.ts`·`read-note.ts`를 사용하는 공통 준비 예제입니다.
+경로를 suite 변수에 두므로 `concurrent`로 실행하지 않습니다.
+
+```ts
+// note-files.integration.test.ts
+import { mkdtempDisposable } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import { beforeEach, expect, it } from "vitest";
+
+import { readNote } from "./read-note.ts";
+import { saveNote } from "./save-note.ts";
+
+let directoryPath: string;
+
+beforeEach(async ({ onTestFinished }) => {
+  const directory = await mkdtempDisposable(join(tmpdir(), "note-files-"));
+
+  // 이후 준비가 실패해도 정리되도록 자원을 얻은 직후 등록합니다.
+  onTestFinished(() => directory[Symbol.asyncDispose]());
+
+  directoryPath = directory.path;
+});
+
+it.each(["첫 메모", "다음 메모"])("파일에 저장한 %s를 다시 읽습니다", async (content) => {
+  const filePath = join(directoryPath, "note.txt");
+
+  await saveNote(filePath, content);
+  const savedContent = await readNote(filePath);
+
+  expect(savedContent).toBe(content);
+});
+```
+
+`beforeEach`의 반환 정리는 반환 전에 실패하면 등록되지 않습니다.
+
+### 정리 순서와 완료
+
+1. 테스트 본문의 `using`·`await using`
+2. `afterEach`
+3. `beforeEach`가 반환한 정리 함수
+4. `onTestFinished` — 등록의 역순
+
+모킹은 이를 사용하는 마지막 정리 작업 뒤에 복구합니다.
+
+| 정리할 대상                | 완료 확인                                                                  |
+| -------------------------- | -------------------------------------------------------------------------- |
+| 직접 연 파일·서버          | 종료 Promise를 기다린 뒤 자원 회수 확인                                    |
+| 진행 중인 요청·작업        | 취소·중단을 요청하고 완료를 기다린 뒤 사용 자원 정리                       |
+| 테스트가 만든 보류 Promise | [응답 순서 예제](mocking.md#응답-완료-순서-제어)처럼 단언 실패 시에도 해제 |
+
+테스트 타임아웃은 작업을 중단하지 않습니다. 정리 훅에서 실제 종료를 기다립니다.
+
+### 참고
+
+- [TypeScript의 using 스코프](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-2.html#using-declarations-and-explicit-resource-management)
+- [Vitest 정리 훅](https://vitest.dev/api/hooks.html#ontestfinished)
 
 ## 다른 자원에 적용
 
 | 자원      | 격리·검증 기준                                                      |
 | --------- | ------------------------------------------------------------------- |
-| 파일      | 테스트별 임시 경로; 저장 후 다시 읽어 내용 확인                     |
 | DB        | 테스트 전용 DB·스키마·트랜잭션; 실제 마이그레이션·쿼리 실행 후 정리 |
 | HTTP 서버 | 임의 포트로 시작하고 종료 훅 등록; 상태 코드·응답·저장 결과 확인    |
 
-- 스코프 밖에서 공유하거나 자동 정리를 지원하지 않는 자원은 생성 직후 사용 수명에 맞는 정리 훅을 등록합니다.
-- DB 엔진별 연산을 검증할 때는 해당 엔진을 사용합니다. 트랜잭션 롤백은 모든 작업이 그 트랜잭션에 참여할 때만 격리를 보장합니다.
-- 테스트 간 공유 테이블을 무조건 비우는 정리 방식은 병렬 실행과 충돌할 수 있으므로 테스트별 격리 범위를 정합니다.
+시작 비용이 큰 자원을 공유하더라도 컨텍스트·데이터는 사례별로 격리합니다.
+DB 엔진별 연산은 해당 엔진으로 검증하고, 공유 테이블 정리는 해당 사례의 데이터로 한정합니다.
+롤백은 같은 트랜잭션의 롤백 가능한 변경만 되돌리므로 파일·외부 요청은 별도로 정리합니다.
 
-참고: [Vitest 테스트 컨텍스트](https://vitest.dev/guide/test-context)·[LobeHub DB 테스트 레퍼런스](https://github.com/lobehub/lobehub/blob/canary/.agents/skills/testing/references/db-model-test.md).
+참고: [LobeHub DB 테스트 레퍼런스](https://github.com/lobehub/lobehub/blob/canary/.agents/skills/testing/references/db-model-test.md)
+
+## 실제 환경과 배포물
+
+로컬 대체로 확인할 수 없는 계약에 실제 환경을 사용합니다.
+
+| 대상                    | 확인할 조건                                                                      |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| 설치 산출물             | 저장소·개발 런타임이 없는 머신·컨테이너에서 배포 파일과 선언한 의존성만으로 실행 |
+| 네이티브 코드·정적 자산 | 도움말 실행에 그치지 않고 해당 연산·요청 수행                                    |
+| 상태·세션이 있는 앱     | 재시작 시 보존·폐기 계약과 종료 뒤 자원 회수                                     |
+| 원격 서비스             | 인증·호환성 등 로컬에서 확인할 수 없는 계약, 호출·시간·비용 한도와 정리 조건     |
+
+검증한 리비전·운영체제·아키텍처·외부 조건과 미확인 범위를 보고합니다.

@@ -25,9 +25,7 @@ pnpm check
 - [공유 저장소](libs/example/README.md): 메모리 저장소 사용법과 개발 명령
 ````
 
-- 준비 방법은 실제 도구 설정과 설치 절차로 바꿉니다.
-- 검사가 없거나 알려진 제한이 있으면 현재 결과를 적습니다.
-- 안내에는 실제로 연결할 문서만 남깁니다.
+명령·링크는 실제 저장소에 맞추고, 검사가 없거나 알려진 제한이 있으면 밝힙니다.
 
 ## 패키지
 
@@ -73,40 +71,36 @@ pnpm test --project @project-template/example
 ```
 ````
 
-| 적용할 내용             | 기준                                   |
-| ----------------------- | -------------------------------------- |
-| 패키지·테스트 이름      | 실제 설정과 일치                       |
-| 테스트 실행 위치        | 루트에서 모아 실행하면 루트 명령 안내  |
-| 공통 설치·상세 API 계약 | 루트 README·API 선언이나 문서로 연결   |
-| 패키지 고유 조건        | 준비·설정 차이와 실행 가능한 작업 설명 |
+### 참고
 
-명령 참고: [pnpm 필터](https://pnpm.io/filtering)·[Vitest 프로젝트 선택](https://vitest.dev/guide/projects.html#running-tests).
+- [pnpm 필터](https://pnpm.io/filtering)
+- [Vitest 프로젝트 선택](https://vitest.dev/guide/projects.html#running-tests)
 
 ### 패키지 유형에 맞추기
-
-대표 사용 예를 고르고 소개 → 사용법 → 개발 순서로 배치합니다.
 
 | 유형      | 사용법에 담을 예시                                            |
 | --------- | ------------------------------------------------------------- |
 | 앱        | 환경 변수·외부 서비스 준비 → 실행 명령 → 접속 주소·확인 방법  |
 | 개발 도구 | 명령·필수 인자·입력 → 출력 위치·형식과 파일 변경 등 실행 효과 |
 
-비동기 호출은 `await`합니다. 필요한 파일·서비스·빌드는 예제 앞에 준비 방법을 적습니다.
-
 ### 설명 배치·구조 정리
-
-예제에 필요한 내용만 아래 위치에 보완합니다. 여러 진입점·작업이 있으면 선택 기준에서 해당 사용 예로 연결합니다.
 
 | 독자의 질문                | 작성 위치·예시                                             |
 | -------------------------- | ---------------------------------------------------------- |
 | 어떤 진입점을 쓰나?        | 사용법: `/browser`·`/testing`의 용도·환경·초기화 조건      |
 | 실행 전에 무엇이 필요한가? | 준비·설정: 필수 옵션·생략 시 동작·`.env.example` 링크      |
 | 왜 이 설정을 쓰나?         | 설계·설정 근거: 저장 방식·`sideEffects`의 이유와 해당 파일 |
-| 어떻게 빌드·배포하나?      | 짧은 명령은 개발 절, 상세 절차는 별도 절·문서              |
+| 어떻게 빌드·배포하나?      | 짧은 명령은 개발 절, 상세 절차는 같은 README의 별도 절     |
 | 어떤 제약이 있나?          | 제약·문제 해결: 지원 범위·증상·원인·해결                   |
 
-공통 설명은 정본으로 연결하고, 실행 전에 필요한 설정은 사용법에서 찾을 수 있게 합니다.
+## 참고
 
-참고: [GitHub README 안내](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)·[npm 패키지 README 안내](https://docs.npmjs.com/about-package-readme-files/).
+### 작성 안내
 
-실제 사례: [Fluent UI의 라이브러리 사용 예](https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-components/README.md)·[create-vite의 도구 실행 예](https://github.com/vitejs/vite/blob/main/packages/create-vite/README.md).
+- [GitHub README 안내](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)
+- [npm 패키지 README 안내](https://docs.npmjs.com/about-package-readme-files/)
+
+### 구성 예제
+
+- [Fluent UI의 라이브러리 사용 예](https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-components/README.md)
+- [create-vite의 도구 실행 예](https://github.com/vitejs/vite/blob/main/packages/create-vite/README.md)
