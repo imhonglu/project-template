@@ -1,4 +1,4 @@
-# 공개 API와 실행 진입점
+# 패키지 진입점 설정
 
 TypeScript 소스를 직접 처리하는 소비자용 구성 예제입니다.
 이름·경로는 실제 패키지·모듈로 바꾸고 JSON은 `package.json`에 병합합니다.
@@ -88,6 +88,14 @@ export * from "./verify-document.ts";
 
 ## 부수 효과를 보존하는 경로
 
+`sideEffects`는 import 시 필요한 부수 효과를 번들러에 알립니다. 내보낸 함수를 호출할 때의 효과는 제외합니다.
+
+| import 시 필요한 부수 효과               | 선언                |
+| ---------------------------------------- | ------------------- |
+| 없음                                     | `false`             |
+| CSS·폴리필·전역 등록 등 일부 파일에 있음 | 해당 파일·glob 배열 |
+| 확인하지 못함                            | 생략                |
+
 `sideEffects` 배열에 없는 파일은 제거 가능한 것으로 취급됩니다. 초기화를 별도 경로로 제공하면 소비자가 그 경로를 import하도록 안내합니다.
 
 ```json
@@ -102,7 +110,8 @@ export * from "./verify-document.ts";
 
 `import "@example/library/register"`로 초기화합니다.
 루트 import로도 초기화하려면 `src/index.ts`에서 등록 파일을 import하고 루트 파일도 `sideEffects`에 포함합니다.
-빌드 배포 시 두 필드의 경로를 산출물 기준으로 맞추고 프로덕션 번들에서 초기화·스타일을 확인합니다.
+빌드 배포 시 두 필드의 경로를 산출물 기준으로 맞추고 프로덕션 번들에서 미사용 모듈 제거와 초기화·스타일 보존을 확인합니다.
+`sideEffects`는 Node.js의 모듈 로드를 제어하지 않습니다.
 
 참고: [webpack의 부수 효과 경로 처리](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free)
 
@@ -130,7 +139,8 @@ packages/library/src/testing/
 ```
 
 배럴은 `main.ts`를 가져오거나 재수출하지 않습니다.
-테스트용 자식 프로그램은 가까운 `fixtures/<프로그램>/main.ts`에 두고 진입점 검색 규칙에 포함합니다.
+테스트용 자식 프로그램의 `fixtures/<프로그램>/main.ts`도 진입점 검색 규칙에 포함합니다.
+미사용 코드 분석 도구에 공개 경로와 실행 진입점을 등록합니다.
 
 부수 효과가 없는 도움말 명령부터 확인합니다.
 

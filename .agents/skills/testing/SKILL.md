@@ -21,7 +21,6 @@ Vitest 예제를 적용할 때는 [공식 문서 색인](https://vitest.dev/llms
 | 저장·조회, 모듈·DB·HTTP 연동 | `save-note.integration.test.ts`       | [통합 테스트](references/integration-tests.md) |
 | DOM·이벤트·브라우저 API      | `create-cart-counter.browser.test.ts` | [브라우저 테스트](references/browser-tests.md) |
 
-- 테스트는 검증할 동작을 담당하는 코드 가까이에 둡니다.
 - 같은 대상·실행 환경은 한 파일에 모으되 책임·격리·실행 비용이 달라지면 나눕니다.
 - `.ts`·`.tsx`·`.test`·`.spec` 등 확장자·접미사는 코드 형식과 실행 도구에 맞춥니다.
 - 브라우저 프로젝트의 실행 모드와 테스트 파일의 `include`·`exclude`를 확인합니다.
@@ -75,9 +74,6 @@ it("무료 배송 기준에 도달하면 배송비가 없습니다", () => {
 | 의존성·인증·클라이언트 연결 | 사례마다 독립된 상태를 만드는 팩토리                                                              |
 | 모듈 모킹·환경별 정리       | [등록 시점과 수명을 명시한 훅](references/mocking.md#공유-모킹의-등록과-초기화) 또는 `setupFiles` |
 | DOM·조회 캐시               | [렌더링과 정리](references/browser-tests.md#공통-렌더링과-정리)를 함께 소유                       |
-
-한 파일에서만 쓰는 준비는 그 파일에, 재사용 도우미는 소유 영역의 `testing/`에 둡니다.
-파일명은 대표 API의 kebab-case 이름을 쓰고 전용 타입·내부 도우미는 함께 둡니다. 외부 소비자가 쓰는 도우미만 공개합니다.
 
 ### 단언 선택
 
