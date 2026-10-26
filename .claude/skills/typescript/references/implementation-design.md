@@ -17,10 +17,10 @@
 
 참고: [Google TypeScript의 정적 컨테이너 클래스 대신 모듈 사용](https://google.github.io/styleguide/tsguide.html#container-classes)
 
-### 인스턴스가 상태를 소유하는 예
+### 인스턴스가 상태를 소유하는 예제
 
 private 필드를 지원하는 TypeScript 실행 환경의 예제입니다.
-`message-buffer.ts`를 저장한 뒤 TSDoc의 사용 예를 같은 디렉터리의 별도 파일에서 실행합니다.
+`message-buffer.ts`를 저장한 뒤 TSDoc의 사용 예제를 같은 디렉터리의 별도 파일에서 실행합니다.
 
 ````ts
 // message-buffer.ts
@@ -89,7 +89,7 @@ export class MessageBuffer {
 }
 ````
 
-## 래퍼·헬퍼·중간 변수
+## 래퍼·도우미·중간 변수
 
 정책에 이름을 붙이거나 자원 정리 경계를 드러내려면 한 번 쓰는 코드도 분리할 수 있습니다.
 

@@ -78,14 +78,14 @@ pnpm test --project @project-template/example
 
 ### 패키지 유형에 맞추기
 
-| 유형      | 사용법에 담을 예시                                            |
+| 유형      | 사용법에 담을 예제                                            |
 | --------- | ------------------------------------------------------------- |
 | 앱        | 환경 변수·외부 서비스 준비 → 실행 명령 → 접속 주소·확인 방법  |
 | 개발 도구 | 명령·필수 인자·입력 → 출력 위치·형식과 파일 변경 등 실행 효과 |
 
 ### 설명 배치·구조 정리
 
-| 독자의 질문                | 작성 위치·예시                                             |
+| 독자의 질문                | 작성 위치·예제                                             |
 | -------------------------- | ---------------------------------------------------------- |
 | 어떤 진입점을 쓰나?        | 사용법: `/browser`·`/testing`의 용도·환경·초기화 조건      |
 | 실행 전에 무엇이 필요한가? | 준비·설정: 필수 옵션·생략 시 동작·`.env.example` 링크      |
@@ -102,5 +102,5 @@ pnpm test --project @project-template/example
 
 ### 구성 예제
 
-- [Fluent UI의 라이브러리 사용 예](https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-components/README.md)
-- [create-vite의 도구 실행 예](https://github.com/vitejs/vite/blob/main/packages/create-vite/README.md)
+- [Fluent UI의 라이브러리 사용 예제](https://github.com/microsoft/fluentui/blob/master/packages/react-components/react-components/README.md)
+- [create-vite의 도구 실행 예제](https://github.com/vitejs/vite/blob/main/packages/create-vite/README.md)

@@ -63,7 +63,7 @@ export async function loadUser(id: string): Promise<User> {
 ## 파일 I/O
 
 - 실행: `mkdtempDisposable`·`await using` 지원 Node.js
-- 정리: 사용 예의 스코프 종료 시 임시 디렉터리 삭제
+- 정리: 사용 예제의 스코프 종료 시 임시 디렉터리 삭제
 - 참고: [Node.js 임시 디렉터리 정리](https://nodejs.org/api/fs.html#fspromisesmkdtempdisposableprefix-options)
 
 ````ts

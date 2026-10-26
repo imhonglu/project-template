@@ -138,4 +138,4 @@ packages/library/src/testing/
 pnpm --filter @example/cli run start --help
 ```
 
-`pnpm --filter`의 스크립트는 패키지 디렉터리에서 실행되므로 파일 인수도 해당 cwd를 기준으로 해석합니다.
+`pnpm --filter`의 스크립트는 패키지 디렉터리에서 실행되므로 파일 인수도 해당 작업 디렉터리를 기준으로 해석합니다.

@@ -29,7 +29,7 @@ export type OrderLoader = (id: string) => Promise<Order | undefined>;
  * @param loadOrder - 주문 조회 함수
  *
  * @returns 주문이 있으면 표시 문구, 없으면 "주문 없음"으로 이행되는 Promise
- * @throws 조회 실패 시 원본 오류로 Promise를 거부합니다.
+ * @throws 조회 실패 시 원래 오류로 Promise를 거부합니다.
  */
 export async function getOrderLabel(id: string, loadOrder: OrderLoader): Promise<string> {
   const order = await loadOrder(id);
@@ -113,7 +113,7 @@ it("두 번째 조회가 먼저 끝나도 각 주문의 문구를 반환합니�
 
 ## import한 외부 모듈 대체
 
-Node.js의 파일 읽기를 모킹해 문구 정리와 오류 전달을 검증합니다. 실제 파일 저장·조회 검증에는 이 모킹을 적용하지 않습니다.
+Node.js의 파일 읽기를 모킹해 앞뒤 공백 제거와 오류 전달을 검증합니다. 실제 파일 저장·조회 검증에는 이 모킹을 적용하지 않습니다.
 
 ```ts
 // load-welcome-message.ts
@@ -124,8 +124,8 @@ import { readFile } from "node:fs/promises";
  *
  * @param filePath - 읽을 파일 경로. 상대 경로는 현재 작업 디렉터리 기준입니다.
  *
- * @returns 공백을 정리한 문구로 이행되는 Promise. 공백뿐이면 빈 문자열입니다.
- * @throws 파일 읽기 실패 시 원본 오류로 Promise를 거부합니다.
+ * @returns 앞뒤 공백을 제거한 문구로 이행되는 Promise. 공백뿐이면 빈 문자열입니다.
+ * @throws 파일 읽기 실패 시 원래 오류로 Promise를 거부합니다.
  */
 export async function loadWelcomeMessage(filePath: string): Promise<string> {
   const content = await readFile(filePath, "utf8");
@@ -186,7 +186,7 @@ describe("loadWelcomeMessage", () => {
 | -------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `vi.mock`·`vi.hoisted` 선언            | 테스트 파일; 부분 대체는 `importOriginal`로 나머지 export 보존                                 |
 | 반환값 생성·호출 기록 초기화·출력 수집 | 공통 도우미; 자신이 소유한 모킹만 처리                                                         |
-| 준비 훅 등록                           | 파일 또는 suite 선언 시 한 번                                                                  |
+| 준비 훅 등록                           | 파일 또는 테스트 묶음 선언 시 한 번                                                            |
 | 성공·실패 응답 설정                    | 각 테스트; 공통 초기화 뒤에 실행                                                               |
 | 모킹 복구                              | [정리 순서](integration-tests.md#정리-순서와-완료)에 따라 해당 모킹을 쓰는 마지막 정리 작업 뒤 |
 
@@ -246,8 +246,8 @@ it.each([
 
 | 변경 항목                    | 정리 방법                                       |
 | ---------------------------- | ----------------------------------------------- |
-| 호출 이력만 초기화           | `mockClear()`·`vi.clearAllMocks()`; 구현은 유지 |
-| 호출 이력·구현 초기화        | `mockReset()`·`vi.resetAllMocks()`              |
+| 호출 기록만 초기화           | `mockClear()`·`vi.clearAllMocks()`; 구현은 유지 |
+| 호출 기록·구현 초기화        | `mockReset()`·`vi.resetAllMocks()`              |
 | `vi.spyOn`으로 교체한 메서드 | `mockRestore()`·`vi.restoreAllMocks()`          |
 | 가짜 시계                    | `vi.useRealTimers()`                            |
 | `vi.stubGlobal`·`vi.stubEnv` | `vi.unstubAllGlobals()`·`vi.unstubAllEnvs()`    |

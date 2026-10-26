@@ -21,7 +21,7 @@ export interface User {
  * 외부 입력을 검증하고 {@link User}로 정규화합니다.
  *
  * @remarks
- * - id와 name의 양끝 공백을 제거합니다.
+ * - id와 name의 앞뒤 공백을 제거합니다.
  * - 두 속성 외의 값은 결과에 포함하지 않으며, 원본은 변경하지 않습니다.
  *
  * @param value - id와 name을 검사할 외부 입력
