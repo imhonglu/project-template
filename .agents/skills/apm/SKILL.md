@@ -82,7 +82,7 @@ mise exec -- apm mcp show "<server-name>"
 
 `includes: auto`를 사용하는 프로젝트에서 `.apm/skills/<name>/SKILL.md`를 원본으로 작성합니다. 이름은 소문자·숫자·하이픈을 사용하고 폴더명과 맞춥니다.
 
-대표 요청·예제를 정하고 [작성·정제 기준](references/skill-authoring.md)에 따라 본문·참고 문서를 구성합니다.
+대표 요청별 산출물을 정하고 [작성·정제 기준](references/skill-authoring.md)에 따라 선택 조건·예제·검증 방법을 연결합니다.
 
 ### 배포
 
