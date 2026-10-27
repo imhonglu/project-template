@@ -34,31 +34,13 @@ export function saveNote(filePath: string, content: string): Promise<void> {
 ```
 
 ```ts
-// read-note.ts
-import { readFile } from "node:fs/promises";
-
-/**
- * UTF-8 파일에 저장된 메모를 그대로 읽습니다.
- *
- * @param filePath - 읽을 파일 경로. 상대 경로는 현재 작업 디렉터리 기준입니다.
- *
- * @returns 파일 내용으로 이행되는 Promise
- * @throws 파일 읽기 실패 시 해당 오류로 Promise를 거부합니다.
- */
-export function readNote(filePath: string): Promise<string> {
-  return readFile(filePath, "utf8");
-}
-```
-
-```ts
 // save-note.integration.test.ts
-import { mkdtempDisposable } from "node:fs/promises";
+import { mkdtempDisposable, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { it } from "vitest";
 
-import { readNote } from "./read-note.ts";
 import { saveNote } from "./save-note.ts";
 
 it.concurrent.for([
@@ -77,7 +59,7 @@ it.concurrent.for([
   const filePath = join(directory.path, "note.txt");
 
   await saveNote(filePath, input);
-  const content = await readNote(filePath);
+  const content = await readFile(filePath, "utf8");
 
   expect(content).toBe(expected);
 });
@@ -104,18 +86,17 @@ it.concurrent.for([
 
 ### 준비 훅에서 만든 자원 유지
 
-위 `save-note.ts`·`read-note.ts`를 사용하는 공통 준비 예제입니다.
+위 `save-note.ts`를 사용하는 공통 준비 예제입니다.
 테스트 묶음에서 경로 변수를 공유하므로 `concurrent`로 실행하지 않습니다.
 
 ```ts
 // note-files.integration.test.ts
-import { mkdtempDisposable } from "node:fs/promises";
+import { mkdtempDisposable, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { beforeEach, expect, it } from "vitest";
 
-import { readNote } from "./read-note.ts";
 import { saveNote } from "./save-note.ts";
 
 let directoryPath: string;
@@ -133,7 +114,7 @@ it.each(["첫 메모", "다음 메모"])("파일에 저장한 %s를 다시 읽�
   const filePath = join(directoryPath, "note.txt");
 
   await saveNote(filePath, content);
-  const savedContent = await readNote(filePath);
+  const savedContent = await readFile(filePath, "utf8");
 
   expect(savedContent).toBe(content);
 });
