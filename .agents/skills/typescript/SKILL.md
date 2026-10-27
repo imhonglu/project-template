@@ -127,6 +127,7 @@ src/
 | ----------------------------------------- | -------------------------------------------------------------------- |
 | 패키지 생성·의존성·검사 연결              | [패키지 구성](references/package-configuration.md)                   |
 | `exports`·환경별 구현·부수 효과·실행 명령 | [진입점 설정](references/entry-points.md)                            |
+| 빌드·릴리스 책임과 실행 검증              | [빌드와 릴리스](references/package-configuration.md#빌드와-릴리스)   |
 | 타입 환경 분리·파일 탐색·경로 별칭        | [타입 검사 범위](references/package-configuration.md#타입-검사-범위) |
 
 ### 타입
