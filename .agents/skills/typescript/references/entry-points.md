@@ -11,7 +11,16 @@ Node.js의 내장 타입 제거는 `node_modules` 아래의 TypeScript 파일에
 
 ## 단일 배럴
 
-공유 패키지 `@example/library`가 제공할 API를 `src/index.ts`에서 모읍니다.
+공유 패키지 `@example/library`의 API를 `src/index.ts` 하나에서 소유 파일로 직접 연결합니다.
+[사용자 검증](type-patterns.md#외부-입력)과 [상태별 문구](type-patterns.md#상태별-데이터)를 배치하는 예제입니다.
+
+```text
+src/
+├── index.ts
+└── users/
+    ├── parse-user.ts
+    └── get-user-label.ts
+```
 
 ```json
 {
@@ -21,18 +30,27 @@ Node.js의 내장 타입 제거는 `node_modules` 아래의 TypeScript 파일에
 
 ```ts
 // src/index.ts
-export * from "./parse-input.ts";
-export * from "./input-error.ts";
-export type * from "./transport.ts";
+export * from "./users/parse-user.ts";
+export * from "./users/get-user-label.ts";
 ```
 
+타입만 제공하는 모듈은 `export type *`로 연결합니다.
+`export *`로 연결할 파일의 named export는 공개 계약으로 관리하고, 내부에서만 공유할 구현은 별도 파일에 둡니다.
 제품 배럴은 내부 도우미·테스트 준비·실행부를 재수출하지 않습니다.
 기존 공개 이름·경로와 전용 타입이 유지되는지 확인합니다.
 CLI만 제공하면 배럴과 `exports`를 생략합니다.
 
-## 제품·검증 배럴
+`export *`는 default export를 포함하지 않습니다. 이름 충돌·기존 이름 보존·일부 API 공개에는 명시적 재수출을 사용합니다.
 
-소비 목적과 실행 환경이 다른 API를 하위 경로로 구분하는 예제입니다.
+### 참고
+
+- [재수출과 이름 충돌](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#re-exporting_aggregating)
+- [타입 전용 재수출](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#support-for-export-type-)
+
+## 분리가 필요한 배럴
+
+공통 API에서 Node.js 전용 구현·외부 소비자용 검증 도구를 격리할 때의 구성입니다.
+필요한 하위 경로만 추가하며, Node.js 전용 패키지라는 이유만으로 `/node`를 나누지는 않습니다.
 
 ```json
 {
@@ -52,14 +70,10 @@ CLI만 제공하면 배럴과 `exports`를 생략합니다.
 
 ```ts
 // src/node.ts
-export * from "./documents/read-document.ts";
+export * from "./files/combine-files.ts";
 ```
 
-```ts
-// src/testing/index.ts
-export * from "../documents/testing/create-document.ts";
-export * from "./verify-document.ts";
-```
+구현은 [파일 I/O 예제](async-patterns.md#파일-io)를 사용합니다.
 
 제품 코드는 검증 도구에 의존하지 않고 기본 배럴도 검증 배럴을 재수출하지 않습니다.
 공개 `testing` 배럴은 각 소유 영역의 외부 소비자용 API를 모읍니다.
@@ -132,11 +146,6 @@ TypeScript 직접 실행을 지원하는 Node.js 환경의 CLI 예제입니다.
 packages/cli/src/
 ├── main.ts             # 인수·신호·출력·종료 코드 연결
 └── run-cli.ts          # 명령 처리
-
-packages/library/src/testing/
-├── index.ts            # 검증 API 배럴
-├── verify-document.ts  # 검증 구현
-└── verify/main.ts      # 독립 실행 프로그램
 ```
 
 배럴은 `main.ts`를 가져오거나 재수출하지 않습니다.
