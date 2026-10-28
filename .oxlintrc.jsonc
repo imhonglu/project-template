@@ -17,10 +17,15 @@
     "typeAware": true,
   },
 
-  // @deprecated로 표시된 API 사용을 오류로 처리합니다.
-  //
-  // 참고: https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-deprecated.html
   "rules": {
+    // 단일 문장인 if·else·반복문에도 중괄호를 사용합니다.
+    //
+    // 참고: https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly
+    "curly": "error",
+
+    // @deprecated로 표시된 API 사용을 오류로 처리합니다.
+    //
+    // 참고: https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-deprecated.html
     "typescript/no-deprecated": "error",
   },
 
