@@ -11,17 +11,17 @@
 
 ## 명령
 
-| 명령                             | 용도                                             |
-| -------------------------------- | ------------------------------------------------ |
-| `mise run setup`                 | 의존성·스킬 설치                                 |
-| `mise run update`                | 개발 도구·의존성·외부 스킬 갱신                  |
-| `pnpm fix`                       | 린트 자동 수정·포맷                              |
-| `pnpm check`                     | 포맷·린트·철자·미사용 항목·타입·테스트 순차 검사 |
-| `pnpm knip`                      | 미사용 파일·의존성·내보내기 검사                 |
-| `pnpm typecheck`                 | 루트와 패키지의 타입 검사                        |
-| `pnpm test`                      | 전체 Vitest 테스트                               |
-| `pnpm test --project <패키지명>` | 패키지별 테스트                                  |
-| `pnpm exec vitest`               | 테스트 감시 모드                                 |
+| 명령                             | 용도                                                             |
+| -------------------------------- | ---------------------------------------------------------------- |
+| `mise run setup`                 | 의존성·스킬 설치                                                 |
+| `mise run update`                | 개발 도구·의존성·외부 스킬 갱신                                  |
+| `pnpm fix`                       | 린트 자동 수정·포맷                                              |
+| `pnpm check`                     | 포맷·린트·컴파일러 진단·철자·미사용 항목·런타임 테스트 순차 검사 |
+| `pnpm knip`                      | 미사용 파일·의존성·내보내기 검사                                 |
+| `pnpm typecheck`                 | 선택: 루트와 패키지의 `tsc` 진단                                 |
+| `pnpm test`                      | 전체 Vitest 테스트                                               |
+| `pnpm test --project <패키지명>` | 패키지별 테스트                                                  |
+| `pnpm exec vitest`               | 테스트 감시 모드                                                 |
 
 명령 정의는 [package.json](package.json)과 [mise.toml](mise.toml), CI 실행 조건은 [CI 설정](.github/workflows/ci.yml)에서 확인합니다.
 
@@ -87,6 +87,15 @@ mise run setup
 
 지원 플랫폼을 추가하면 위 명령의 `--platform` 값과 `mise.toml`의 `tasks.update`에 있는 플랫폼 목록을 함께 수정합니다.
 
+잠금 파일 형식 갱신 경고가 나오면 협업 환경의 mise가 새 형식을 지원하는지 확인한 뒤 아래 명령을 실행합니다. 이전 mise는 새 형식의 잠금 파일을 읽지 못할 수 있습니다.
+
+```sh
+mise lock --upgrade --platform macos-arm64,linux-x64
+mise install --locked
+```
+
+참고: [mise 잠금 파일 형식](https://mise.jdx.dev/dev-tools/mise-lock-reference.html#format-versions)
+
 ### 패키지 의존성 변경 (pnpm)
 
 변경 대상 패키지의 `package.json`을 수정합니다.
@@ -102,6 +111,16 @@ pnpm install
 
 ## 검증
 
+### 전체 검사
+
+`pnpm check`는 포맷 → 린트·컴파일러 진단 → 철자 → 미사용 항목 → 런타임 테스트 순서로 실행하며, `&&`로 연결되어 첫 실패에서 중단합니다.
+
+`expectTypeOf`·`assertType`의 타입 단언 오류와 미사용 `@ts-expect-error` 등의 컴파일러 진단은 Oxlint 단계에서 한 번만 검사합니다. 별도 `tsc` 단계나 Vitest typecheck는 자동 실행하지 않습니다. TypeScript 의존성·tsconfig·런타임 테스트·타입 단언은 유지하며, 추가 `tsc` 진단이 필요하면 독립적인 `pnpm typecheck` 또는 패키지별 `typecheck`를 선택 실행합니다.
+
+실험적인 `--type-check`는 루트 `check`에만 적용하고 기존 `options.typeAware`는 유지합니다. 도구·패키지·tsconfig 변경이나 검사 대상 파일의 추가·이동·제외 범위 변경 시 설치된 Oxlint·oxlint-tsgolint·TypeScript 조합의 호환성과 진단을 확인하고, `tsc --showConfig`·`tsc --listFilesOnly`와 `oxlint --type-check --debug files`로 파일 범위·프로젝트 `references`를 대조합니다. 현재 저장소에는 패키지와 `references`가 없으며, 확인된 기존 파일 범위는 루트의 `*.config.ts`입니다.
+
+tsconfig의 `include`·`exclude`만으로 Oxlint의 파일 탐색 범위가 제한되지는 않습니다. 제외 대상은 기존 Oxlint·Git 무시 규칙도 확인하며, 새 패키지·`references`에서 두 도구의 검사 범위와 진단이 같다고 전제하지 않습니다.
+
 ### Git 훅
 
 의존성 설치 시 `prepare` 스크립트가 Husky 훅을 등록합니다. 수동 재설정은 `pnpm run prepare`로 실행하며, CI에서는 `HUSKY=0`으로 훅 설치를 생략합니다.
@@ -111,13 +130,13 @@ pnpm install
 | [pre-commit](.husky/pre-commit) | 스테이징된 파일의 린트 자동 수정·포맷·철자 검사 | [lint-staged.config.ts](lint-staged.config.ts) |
 | [commit-msg](.husky/commit-msg) | 커밋 메시지 형식 검사                           | [commitlint.config.ts](commitlint.config.ts)   |
 
-lint-staged의 수정 결과는 스테이징에 반영하며 부분 스테이징을 보존합니다. 타입·테스트를 포함한 전체 검사는 `pnpm check`로 실행합니다.
+lint-staged의 수정 결과는 스테이징에 반영하며 부분 스테이징을 보존합니다. `pnpm fix`와 pre-commit은 기존 `typeAware` 린트를 수행하지만 `--type-check`의 컴파일러 진단은 포함하지 않으므로 전체 검사를 대체하지 않습니다. 컴파일러 진단·테스트를 포함한 전체 검사는 `pnpm check`로 실행합니다.
 
 ### 테스트
 
 루트 [vitest.config.ts](vitest.config.ts)가 패키지별 테스트를 모아 실행합니다.
 
-초기 테스트 제한은 [README.md](README.md#시작)를 참고합니다. 테스트를 추가하면 루트의 `passWithNoTests`를 제거합니다.
+초기 테스트 동작과 허용 범위는 [README.md](README.md#시작)를 참고합니다. 테스트를 추가하면 루트의 `passWithNoTests`를 제거합니다.
 
 ## 완료 조건
 
