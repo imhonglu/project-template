@@ -99,7 +99,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:7b6e5bb07cd0b8832800416d074ce6899d22400d25c69ab0d8abe2f4d94aed45
+  content_hash: sha256:1916fbf36dfa63b45a580242e9b0960c909c7516ae1a8f9a68012e2b2c6393d5
 - kind: project-relative
   target: claude
   value: .claude/skills/project-structure
@@ -117,7 +117,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:68d6b85cc35291b540a1a82a1730d86630c5208cdef6d56a33c902239daee04f
+  content_hash: sha256:6dc4c8b9a53d320383df0e0ee34742cd54fc7848636c4f4d1efa7cf851095fed
 - kind: project-relative
   target: claude
   value: .claude/skills/simple-korean
@@ -414,7 +414,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:7b6e5bb07cd0b8832800416d074ce6899d22400d25c69ab0d8abe2f4d94aed45
+  content_hash: sha256:1916fbf36dfa63b45a580242e9b0960c909c7516ae1a8f9a68012e2b2c6393d5
 - kind: project-relative
   target: codex
   value: .agents/skills/project-structure
@@ -432,7 +432,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:68d6b85cc35291b540a1a82a1730d86630c5208cdef6d56a33c902239daee04f
+  content_hash: sha256:6dc4c8b9a53d320383df0e0ee34742cd54fc7848636c4f4d1efa7cf851095fed
 - kind: project-relative
   target: codex
   value: .agents/skills/simple-korean
@@ -710,8 +710,8 @@ local_deployed_file_hashes:
   .agents/skills/documentation/references/api-contracts.md: sha256:e2928fb6d06fa4556883a8b26d7b1077f654d6cca292ba6abc32f470fa199c73
   .agents/skills/documentation/references/document-structure.md: sha256:df9d24791d906a1f55c02d6f860553feed48b28ad5a7cb45332e3d669dd8cdfe
   .agents/skills/documentation/references/readme.md: sha256:5c9816076c676c83957f10e27eaa80482953a24336b2434d737873f31adbb7bc
-  .agents/skills/git-commit/SKILL.md: sha256:7b6e5bb07cd0b8832800416d074ce6899d22400d25c69ab0d8abe2f4d94aed45
-  .agents/skills/project-structure/SKILL.md: sha256:68d6b85cc35291b540a1a82a1730d86630c5208cdef6d56a33c902239daee04f
+  .agents/skills/git-commit/SKILL.md: sha256:1916fbf36dfa63b45a580242e9b0960c909c7516ae1a8f9a68012e2b2c6393d5
+  .agents/skills/project-structure/SKILL.md: sha256:6dc4c8b9a53d320383df0e0ee34742cd54fc7848636c4f4d1efa7cf851095fed
   .agents/skills/simple-korean/SKILL.md: sha256:c5e2cd98cba7f83869506511ba05d459f00eabddc8032e4b993e49c9a5cc8a2a
   .agents/skills/simple-korean/references/editing-examples.md: sha256:3ddc2a0d4f636cadd5a61e4eace9568cd7dd1e98620640fdcf3bd5cceb3c2cd7
   .agents/skills/skill-authoring/SKILL.md: sha256:cbd2db0555634af17e203c596db128f9f0c0880c11041119e151883557ce8c2c
@@ -737,8 +737,8 @@ local_deployed_file_hashes:
   .claude/skills/documentation/references/api-contracts.md: sha256:e2928fb6d06fa4556883a8b26d7b1077f654d6cca292ba6abc32f470fa199c73
   .claude/skills/documentation/references/document-structure.md: sha256:df9d24791d906a1f55c02d6f860553feed48b28ad5a7cb45332e3d669dd8cdfe
   .claude/skills/documentation/references/readme.md: sha256:5c9816076c676c83957f10e27eaa80482953a24336b2434d737873f31adbb7bc
-  .claude/skills/git-commit/SKILL.md: sha256:7b6e5bb07cd0b8832800416d074ce6899d22400d25c69ab0d8abe2f4d94aed45
-  .claude/skills/project-structure/SKILL.md: sha256:68d6b85cc35291b540a1a82a1730d86630c5208cdef6d56a33c902239daee04f
+  .claude/skills/git-commit/SKILL.md: sha256:1916fbf36dfa63b45a580242e9b0960c909c7516ae1a8f9a68012e2b2c6393d5
+  .claude/skills/project-structure/SKILL.md: sha256:6dc4c8b9a53d320383df0e0ee34742cd54fc7848636c4f4d1efa7cf851095fed
   .claude/skills/simple-korean/SKILL.md: sha256:c5e2cd98cba7f83869506511ba05d459f00eabddc8032e4b993e49c9a5cc8a2a
   .claude/skills/simple-korean/references/editing-examples.md: sha256:3ddc2a0d4f636cadd5a61e4eace9568cd7dd1e98620640fdcf3bd5cceb3c2cd7
   .claude/skills/skill-authoring/SKILL.md: sha256:cbd2db0555634af17e203c596db128f9f0c0880c11041119e151883557ce8c2c
