@@ -162,7 +162,34 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:cbd2db0555634af17e203c596db128f9f0c0880c11041119e151883557ce8c2c
+  content_hash: sha256:93bd64178fd5a602a7f28c42716af74ec39dabdd0a86670857b00d8856bd0c5c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/skill-authoring/references/evaluation.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:f972f970bb64ce7a2d24bbb4e724dc2bf9ba22e919cf158bcafee9143ba45ef5
+- kind: project-relative
+  target: claude
+  value: .claude/skills/skill-authoring/references/session-refinement.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:a8d70a5508380cafc728673b42b395e000982a0f0b506aad056d9a6c860175e2
+- kind: project-relative
+  target: claude
+  value: .claude/skills/skill-authoring/scripts/summarize-evaluation.py
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:154731cd27b20245b370ddd8d74c983c58f78ba96308a708d240990589f2b9e3
 - kind: project-relative
   target: claude
   value: .claude/skills/testing
@@ -477,7 +504,34 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:cbd2db0555634af17e203c596db128f9f0c0880c11041119e151883557ce8c2c
+  content_hash: sha256:93bd64178fd5a602a7f28c42716af74ec39dabdd0a86670857b00d8856bd0c5c
+- kind: project-relative
+  target: codex
+  value: .agents/skills/skill-authoring/references/evaluation.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:f972f970bb64ce7a2d24bbb4e724dc2bf9ba22e919cf158bcafee9143ba45ef5
+- kind: project-relative
+  target: codex
+  value: .agents/skills/skill-authoring/references/session-refinement.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:a8d70a5508380cafc728673b42b395e000982a0f0b506aad056d9a6c860175e2
+- kind: project-relative
+  target: codex
+  value: .agents/skills/skill-authoring/scripts/summarize-evaluation.py
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:154731cd27b20245b370ddd8d74c983c58f78ba96308a708d240990589f2b9e3
 - kind: project-relative
   target: codex
   value: .agents/skills/testing
@@ -650,6 +704,9 @@ local_deployed_files:
 - .agents/skills/simple-korean/references/editing-examples.md
 - .agents/skills/skill-authoring
 - .agents/skills/skill-authoring/SKILL.md
+- .agents/skills/skill-authoring/references/evaluation.md
+- .agents/skills/skill-authoring/references/session-refinement.md
+- .agents/skills/skill-authoring/scripts/summarize-evaluation.py
 - .agents/skills/testing
 - .agents/skills/testing/SKILL.md
 - .agents/skills/testing/references/browser-tests.md
@@ -685,6 +742,9 @@ local_deployed_files:
 - .claude/skills/simple-korean/references/editing-examples.md
 - .claude/skills/skill-authoring
 - .claude/skills/skill-authoring/SKILL.md
+- .claude/skills/skill-authoring/references/evaluation.md
+- .claude/skills/skill-authoring/references/session-refinement.md
+- .claude/skills/skill-authoring/scripts/summarize-evaluation.py
 - .claude/skills/testing
 - .claude/skills/testing/SKILL.md
 - .claude/skills/testing/references/browser-tests.md
@@ -714,7 +774,10 @@ local_deployed_file_hashes:
   .agents/skills/project-structure/SKILL.md: sha256:6dc4c8b9a53d320383df0e0ee34742cd54fc7848636c4f4d1efa7cf851095fed
   .agents/skills/simple-korean/SKILL.md: sha256:c5e2cd98cba7f83869506511ba05d459f00eabddc8032e4b993e49c9a5cc8a2a
   .agents/skills/simple-korean/references/editing-examples.md: sha256:3ddc2a0d4f636cadd5a61e4eace9568cd7dd1e98620640fdcf3bd5cceb3c2cd7
-  .agents/skills/skill-authoring/SKILL.md: sha256:cbd2db0555634af17e203c596db128f9f0c0880c11041119e151883557ce8c2c
+  .agents/skills/skill-authoring/SKILL.md: sha256:93bd64178fd5a602a7f28c42716af74ec39dabdd0a86670857b00d8856bd0c5c
+  .agents/skills/skill-authoring/references/evaluation.md: sha256:f972f970bb64ce7a2d24bbb4e724dc2bf9ba22e919cf158bcafee9143ba45ef5
+  .agents/skills/skill-authoring/references/session-refinement.md: sha256:a8d70a5508380cafc728673b42b395e000982a0f0b506aad056d9a6c860175e2
+  .agents/skills/skill-authoring/scripts/summarize-evaluation.py: sha256:154731cd27b20245b370ddd8d74c983c58f78ba96308a708d240990589f2b9e3
   .agents/skills/testing/SKILL.md: sha256:1ccf150f3a0a1f47ac65f9a46177a84a79b901e8ad1551ab2fc95a5c124409bc
   .agents/skills/testing/references/browser-tests.md: sha256:0de2e4ef3abfe273a05050b4eb753bc2f3a3cc537ce8b8717514c4e8f59e0355
   .agents/skills/testing/references/integration-tests.md: sha256:11d095b2a72859881b711d6bdd93625f59dc98e9158d4d75721ab62b9d671b49
@@ -741,7 +804,10 @@ local_deployed_file_hashes:
   .claude/skills/project-structure/SKILL.md: sha256:6dc4c8b9a53d320383df0e0ee34742cd54fc7848636c4f4d1efa7cf851095fed
   .claude/skills/simple-korean/SKILL.md: sha256:c5e2cd98cba7f83869506511ba05d459f00eabddc8032e4b993e49c9a5cc8a2a
   .claude/skills/simple-korean/references/editing-examples.md: sha256:3ddc2a0d4f636cadd5a61e4eace9568cd7dd1e98620640fdcf3bd5cceb3c2cd7
-  .claude/skills/skill-authoring/SKILL.md: sha256:cbd2db0555634af17e203c596db128f9f0c0880c11041119e151883557ce8c2c
+  .claude/skills/skill-authoring/SKILL.md: sha256:93bd64178fd5a602a7f28c42716af74ec39dabdd0a86670857b00d8856bd0c5c
+  .claude/skills/skill-authoring/references/evaluation.md: sha256:f972f970bb64ce7a2d24bbb4e724dc2bf9ba22e919cf158bcafee9143ba45ef5
+  .claude/skills/skill-authoring/references/session-refinement.md: sha256:a8d70a5508380cafc728673b42b395e000982a0f0b506aad056d9a6c860175e2
+  .claude/skills/skill-authoring/scripts/summarize-evaluation.py: sha256:154731cd27b20245b370ddd8d74c983c58f78ba96308a708d240990589f2b9e3
   .claude/skills/testing/SKILL.md: sha256:1ccf150f3a0a1f47ac65f9a46177a84a79b901e8ad1551ab2fc95a5c124409bc
   .claude/skills/testing/references/browser-tests.md: sha256:0de2e4ef3abfe273a05050b4eb753bc2f3a3cc537ce8b8717514c4e8f59e0355
   .claude/skills/testing/references/integration-tests.md: sha256:11d095b2a72859881b711d6bdd93625f59dc98e9158d4d75721ab62b9d671b49
