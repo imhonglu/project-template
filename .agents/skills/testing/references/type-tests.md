@@ -1,6 +1,6 @@
 # 값과 타입 검증
 
-공개 제네릭·유니온·타입 유틸리티의 추론 결과가 계약이면 값의 테스트에 타입 단언을 함께 둡니다. 구현 가까이의 일반 `.test.ts`에 작성하고 JSX는 `.test.tsx`, 기존 `.spec`은 그대로 사용합니다. 타입 테스트 전용 접미사·디렉터리는 만들지 않습니다.
+공개 제네릭·유니온·타입 유틸리티의 추론 결과가 계약이면 같은 입력의 값과 타입을 함께 단언합니다.
 값은 Vitest 실행으로, `expectTypeOf`는 해당 파일을 포함한 실제 타입 진단으로 검증합니다. 일반 Vitest 실행은 TypeScript를 변환할 뿐 타입 오류를 검사하지 않습니다.
 
 ## 첫 원소의 값과 추론 결과
@@ -52,6 +52,7 @@ it("빈 목록이면 undefined를 반환합니다", () => {
 ## 파일 포함과 검사 명령
 
 실제 `package.json`·Vitest 설정·tsconfig에서 **테스트 수집과 타입 검사 포함 여부를 각각 확인**합니다. 아래는 두 예제 파일을 `libs/example/src/`에 두고 루트 `test`가 Vitest를 실행하는 경우입니다. 경로·명령은 기존 구성에 맞춥니다.
+파일 포함 여부가 불명확하면 다음 명령으로 상속된 설정과 import된 파일까지 확인합니다.
 
 ```sh
 package_path=libs/example
@@ -71,7 +72,6 @@ pnpm test "$package_path/src/first-item.test.ts"
 기존 검사 명령이 같은 타입 진단·런타임 실행을 포함하면 중복 실행하지 않습니다. 루트 성공·미수집 성공·`passWithNoTests`만으로 해당 파일의 통과를 보고하지 않습니다.
 타입 단언 실패를 감추려고 런타임 수집에서 빼거나 특수 접미사로 바꾸지 않습니다.
 
-Oxlint를 사용하면 `pnpm exec oxlint --debug files`로 진입 파일을 별도로 확인합니다. tsconfig의 `include`·`exclude`만으로 Oxlint 탐색 범위가 제한되지는 않으며, 어느 쪽 파일 목록도 타입 진단 결과를 대신하지 않습니다.
 실행한 명령·설정·대상 파일·진단 결과와 미검증 범위를 보고합니다.
 
 ## 참고
@@ -81,4 +81,3 @@ Oxlint를 사용하면 `pnpm exec oxlint --debug files`로 진입 파일을 별�
 - [TypeScript CLI의 설정·파일 목록 옵션](https://www.typescriptlang.org/docs/handbook/compiler-options.html#cli-commands)
 - [TypeScript include](https://www.typescriptlang.org/tsconfig/include.html)
 - [TypeScript exclude와 import 포함](https://www.typescriptlang.org/tsconfig/exclude.html)
-- [Oxlint CLI의 파일 탐색 진단](https://oxc.rs/docs/guide/usage/linter/cli.md)
