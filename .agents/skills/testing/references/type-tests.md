@@ -1,7 +1,7 @@
 # 값과 타입 검증
 
 공개 제네릭·유니온·타입 유틸리티의 추론 결과가 계약이면 같은 입력의 값과 타입을 함께 단언합니다.
-값은 Vitest 실행으로, `expectTypeOf`는 해당 파일을 포함한 실제 타입 진단으로 검증합니다. 일반 Vitest 실행은 TypeScript를 변환할 뿐 타입 오류를 검사하지 않습니다.
+값은 Vitest 실행으로, `expectTypeOf`는 해당 파일을 포함한 타입 진단으로 검증합니다. 일반 Vitest 실행은 TypeScript를 변환할 뿐 타입 오류를 검사하지 않습니다.
 
 ## 첫 원소의 값과 추론 결과
 
@@ -47,11 +47,11 @@ it("빈 목록이면 undefined를 반환합니다", () => {
 });
 ```
 
-기대 타입은 공개 계약에 따라 직접 명시합니다. `ReturnType<typeof firstItem>`에서 가져오면 잘못된 반환 타입 변경도 따라가므로 회귀를 잡을 수 없습니다. 값의 단언과 타입의 단언은 같은 사례에 남겨 어떤 입력에서 어떤 추론을 보장하는지 드러냅니다.
+기대 타입은 공개 계약에 따라 직접 명시합니다. `ReturnType<typeof firstItem>`을 쓰면 잘못된 반환 타입 변경도 따라가 회귀를 잡지 못합니다. 값·타입 단언은 같은 사례에 두어 입력별 추론 보장을 드러냅니다.
 
 ## 파일 포함과 검사 명령
 
-실제 `package.json`·Vitest 설정·tsconfig에서 **테스트 수집과 타입 검사 포함 여부를 각각 확인**합니다. 아래는 두 예제 파일을 `libs/example/src/`에 두고 루트 `test`가 Vitest를 실행하는 경우입니다. 경로·명령은 기존 구성에 맞춥니다.
+`package.json`·Vitest 설정·tsconfig에서 **테스트 수집과 타입 검사 포함 여부를 각각 확인**합니다. 아래는 두 예제 파일을 `libs/example/src/`에 두고 루트 `test`가 Vitest를 실행하는 경우입니다. 경로·명령은 기존 구성에 맞춥니다.
 파일 포함 여부가 불명확하면 다음 명령으로 상속된 설정과 import된 파일까지 확인합니다.
 
 ```sh
@@ -60,7 +60,7 @@ pnpm exec tsc --project "$package_path/tsconfig.json" --showConfig
 pnpm exec tsc --project "$package_path/tsconfig.json" --listFilesOnly
 ```
 
-출력에 `first-item.ts`와 `first-item.test.ts`가 모두 있어야 합니다. 첫 명령은 상속된 설정, 둘째는 import된 선언까지 확인하며 타입 진단은 실행하지 않습니다.
+출력에 `first-item.ts`와 `first-item.test.ts`가 모두 있어야 합니다. 첫 명령은 상속된 설정, 둘째는 import된 선언까지 확인하며 타입 진단은 하지 않습니다.
 테스트가 빠지면 포함 범위를 고칩니다. Node.js·브라우저 전역 충돌로 설정을 나눴다면 테스트용 설정도 기존 검사 단계에 연결합니다.
 
 ```sh
