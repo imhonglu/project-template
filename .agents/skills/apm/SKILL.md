@@ -15,7 +15,7 @@ description: 에이전트 스킬·MCP 서버를 탐색·비교·추천하고 APM
 
 ## 스킬·MCP 검색
 
-이미 설치된 스킬과 연결된 도구로 해결할 수 있는지 확인한 뒤, 필요한 기능에 따라 검색합니다.
+설치된 스킬·연결된 도구로 해결할 수 있는지 확인한 뒤 필요한 기능을 검색합니다.
 
 | 필요한 기능                       | 검색 대상                   |
 | --------------------------------- | --------------------------- |
@@ -39,14 +39,14 @@ mise exec -- pnpm dlx skills find react performance
 
 ### MCP
 
-[공식 MCP Registry](https://registry.modelcontextprotocol.io/)와 서비스 제공자의 문서를 확인합니다. Registry 등록 자체가 코드 품질이나 보안 심사를 보장하지는 않습니다.
+[공식 MCP Registry](https://registry.modelcontextprotocol.io/)와 서비스 제공자의 문서를 확인합니다. Registry 등록은 코드 품질이나 보안 심사를 보장하지 않습니다.
 
 ```sh
 mise exec -- apm mcp search github --limit 5
 mise exec -- apm mcp show "<server-name>"
 ```
 
-`<server-name>`은 검색 결과의 전체 식별자로 바꿉니다. 검색은 문자열 일치 방식이므로 서비스명·기능명을 검색어로 사용합니다.
+`<server-name>`은 검색 결과의 전체 식별자로 바꿉니다. 문자열 일치 검색이므로 서비스명·기능명을 검색어로 씁니다.
 
 - 필요한 조회·수정 도구와 읽기 전용 사용 가능 여부를 확인합니다.
 - 공식 배포·커뮤니티 구현을 구분하고 stdio·HTTP 방식, 클라이언트 지원, 인증·권한·비용을 비교합니다.
@@ -59,9 +59,9 @@ mise exec -- apm mcp show "<server-name>"
 
 ## APM 패키지 관리
 
-`apm.yml`·`apm.lock.yaml`을 함께 읽어 원본·배포 대상을 정하고, 해당 파일의 내용·해시를 묶어 대조합니다. 누락·불일치가 있으면 관련 경로를 더 확인합니다. 잠금 파일은 APM 명령으로 갱신합니다.
+`apm.yml`·`apm.lock.yaml`을 함께 읽어 원본·배포 대상을 정하고 해당 파일의 내용·해시를 묶어 대조합니다. 누락·불일치가 있으면 관련 경로를 더 확인합니다. 잠금 파일은 APM 명령으로 갱신합니다.
 
-`apm deps list`가 실행 불가이거나 실패가 확인·보고됐으면 선언·파일로 확인합니다. 같은 조건에서 재시도하거나 조회를 APM 자체 수정으로 확대하지 않습니다.
+`apm deps list`를 실행할 수 없거나 실패가 확인·보고됐으면 선언·파일로 확인합니다. 같은 조건에서 재시도하거나 조회를 APM 자체 수정으로 확대하지 않습니다.
 
 | 대조할 자료             | 확인할 내용                           |
 | ----------------------- | ------------------------------------- |
@@ -71,28 +71,28 @@ mise exec -- apm mcp show "<server-name>"
 
 빈 의존성 목록도 로컬 스킬이 없다는 뜻은 아닙니다.
 
-| 작업               | 명령                                                       |
-| ------------------ | ---------------------------------------------------------- |
-| 설치된 의존성 확인 | `mise exec -- apm deps list`                               |
-| 패키지 설치        | `mise exec -- apm install "<owner/repo>"`                  |
-| 특정 스킬 설치     | `mise exec -- apm install "<owner/repo>" --skill "<name>"` |
-| 특정 패키지 갱신   | `mise exec -- apm update "<package>"`                      |
-| 전체 의존성 갱신   | `mise exec -- apm update`                                  |
-| 패키지 제거        | `mise exec -- apm uninstall "<package>"`                   |
+| 작업               | 명령                                                                   |
+| ------------------ | ---------------------------------------------------------------------- |
+| 설치된 의존성 확인 | `mise exec -- apm deps list`                                           |
+| 패키지 설치        | `mise exec -- apm install --no-frozen "<owner/repo>"`                  |
+| 특정 스킬 설치     | `mise exec -- apm install --no-frozen "<owner/repo>" --skill "<name>"` |
+| 특정 패키지 갱신   | `mise exec -- apm update "<package>"`                                  |
+| 전체 의존성 갱신   | `mise exec -- apm update`                                              |
+| 패키지 제거        | `mise exec -- apm uninstall "<package>"`                               |
 
-`<package>`는 목록 또는 선언·잠금 파일에서 확인한 식별자로 바꿉니다. 전체 갱신은 요청받은 경우에 실행하며, 갱신 범위는 선언된 ref를 따릅니다.
+`<package>`는 목록 또는 선언·잠금 파일에서 확인한 식별자로 바꿉니다. 전체 갱신은 요청받았을 때만 실행하며 범위는 선언된 ref를 따릅니다.
 
 ## 로컬 스킬 배포
 
 `includes: auto`를 사용하는 프로젝트의 로컬 원본은 `.apm/skills/<name>/SKILL.md`에 둡니다.
 
-로컬 원본 수정이나 요청 범위의 `apm.yml` 변경을 기존 대상에 반영할 때 아래 명령으로 배포본·잠금 파일을 재생성합니다. 배포본에만 있는 사용자 수정은 원본과 비교해 원본에 보존한 뒤 실행합니다.
+로컬 원본 수정이나 요청 범위의 `apm.yml` 변경은 아래 명령으로 기존 대상에 반영하고 배포본·잠금 파일을 재생성합니다. 배포본에만 있는 사용자 수정은 원본과 비교해 원본에 보존한 뒤 실행합니다.
 
 ```sh
-mise exec -- apm install
+mise exec -- apm install --no-frozen
 ```
 
-스킬 이름을 바꾸거나 삭제한 뒤 남은 배포본은 사용자 수정 여부와 소유 관계를 확인해 정리하고 다시 배포합니다.
+이름 변경·삭제 후 남은 배포본은 사용자 수정 여부와 소유 관계를 확인해 정리하고 다시 배포합니다.
 
 ## 도구 연결
 
